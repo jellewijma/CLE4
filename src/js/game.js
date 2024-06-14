@@ -1,7 +1,7 @@
 import { Actor, Engine, Vector, DisplayMode } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js';
-import { Town } from './town.js';
-import { Land } from './land.js';
+import { Cafe } from './cafe.js';
+import { ShoppingCenter } from './shoppingCenter.js';
 
 export class Game extends Engine {
 
@@ -19,9 +19,9 @@ export class Game extends Engine {
 
     startGame() {
         console.log("start de game!");
-        this.add("town", new Town(this));
-        this.add("land", new Land(this));
-        this.goToScene("town", { sceneActivationData: this.timerLeftInMonth });
+        this.add("cafe", new Cafe(this));
+        this.add("shoppingcenter", new ShoppingCenter(this));
+        this.goToScene("shoppingcenter", { sceneActivationData: this.timerLeftInMonth });
     }
 }
 

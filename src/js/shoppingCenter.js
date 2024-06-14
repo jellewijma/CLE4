@@ -1,13 +1,13 @@
 import { Scene, Label, Font, Color, Timer } from "excalibur"
 
-class Town extends Scene {
+class ShoppingCenter extends Scene {
 
     monthLoop;
     constructor(game) {
         super()
 
         this.game = game
-        this.backgroundColor = Color.Gray
+        this.backgroundColor = Color.Green
 
         // label increment
         let next = new Label({
@@ -21,7 +21,7 @@ class Town extends Scene {
             }),
         });
         next.on('pointerup', () => {
-            this.game.goToScene("land", { sceneActivationData: this.game.counter });
+            this.game.goToScene("cafe", { sceneActivationData: this.game.counter });
         });
         this.add(next);
 
@@ -43,7 +43,7 @@ class Town extends Scene {
     }
 
     onActivate() {
-        console.log("Town activated!")
+        console.log("Land activated!")
         console.log(this.game.timerLeftInMonth)
         this.monthLoop.start();
     }
@@ -51,4 +51,4 @@ class Town extends Scene {
 
 
 
-export { Town }
+export { ShoppingCenter }

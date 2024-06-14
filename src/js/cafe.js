@@ -1,31 +1,54 @@
-import { Scene, Color, Vector, Actor } from 'excalibur';
+import { Scene, Label, Font, Color, Timer } from "excalibur"
 
+class Cafe extends Scene {
 
-export class Cafe extends Scene {
-    constructor(engine) {
-        super(engine)
+    monthLoop;
+    constructor(game) {
+        super()
+
+        this.game = game
+        this.backgroundColor = Color.Gray
+
+        // label increment
+        let next = new Label({
+            text: "Next Scene",
+            color: Color.White,
+            x: 10,
+            y: 10,
+            font: new Font({
+                size: 20,
+                family: 'Arial'
+            }),
+        });
+        next.on('pointerup', () => {
+            this.game.goToScene("shoppingcenter", { sceneActivationData: this.game.counter });
+        });
+        this.add(next);
+
+        this.monthLoop = new Timer({
+            fcn: () => {
+                if (this.game.timerLeftInMonth > 0) {
+                    this.game.timerLeftInMonth--;
+                    console.log(this.game.timerLeftInMonth);
+                } else {
+                    this.game.timerLeftInMonth = 8;
+                    console.log("month is over!")
+                    console.log(this.game.timerLeftInMonth);
+                }
+            },
+            interval: 500,
+            repeats: true
+        });
+        this.add(this.monthLoop);
     }
 
     onActivate() {
-        console.log('Je bent nu in de Cafe scene');
-
-        const square = new Actor({
-            pos: new Vector(100, 100),
-            width: 100,
-            height: 100,
-            color: Color.Black
-        })
-
-        this.add(square)
-        square.on('pointerdown', (event) => {
-            this.changeScene();
-        })
-    }
-
-    changeScene() {
-        this.engine.goToScene('shoppingcentre')
+        console.log("Town activated!")
+        console.log(this.game.timerLeftInMonth)
+        this.monthLoop.start();
     }
 }
 
 
 
+export { Cafe }
