@@ -1,7 +1,11 @@
 import { Actor, Engine, Vector, DisplayMode } from "excalibur"
-import { Resources, ResourceLoader } from './resources.js'
+import { Resources, ResourceLoader } from './resources.js';
+import { Town } from './town.js';
+import { Land } from './land.js';
 
 export class Game extends Engine {
+
+    timerLeftInMonth = 8;
 
     constructor() {
         super({
@@ -9,13 +13,16 @@ export class Game extends Engine {
             height: 720,
             maxFps: 60,
             displayMode: DisplayMode.FitScreen
-        })
-        this.start(ResourceLoader).then(() => this.startGame())
+        });
+        this.start(ResourceLoader).then(() => this.startGame());
     }
 
     startGame() {
-        console.log("start de game!")
+        console.log("start de game!");
+        this.add("town", new Town(this));
+        this.add("land", new Land(this));
+        this.goToScene("town", { sceneActivationData: this.timerLeftInMonth });
     }
 }
 
-new Game()
+new Game();
