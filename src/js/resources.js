@@ -1,12 +1,13 @@
-import { ImageSource, Sound, Resource, Loader } from 'excalibur'
+import { ImageSource, Loader } from 'excalibur';
+import npcImage from '../images/npc.png';
 
-// voeg hier jouw eigen resources toe
+// Define resources
 const Resources = {
-}
+    Npc: new ImageSource(npcImage)
+};
 
-const ResourceLoader = new Loader()
-for (let res of Object.values(Resources)) {
-    ResourceLoader.addResource(res)
-}
+// Create a new loader and add resources to it
+const ResourceLoader = new Loader(Object.values(Resources));
 
-export { Resources, ResourceLoader }
+export { Resources, ResourceLoader };
+
