@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, DisplayMode, Label, Color, Font } from "excalibur";
+import { Actor, Engine, Vector, DisplayMode } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js';
 import { Town } from './town.js';
 import { Land } from './land.js';
