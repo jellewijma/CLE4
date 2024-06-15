@@ -3,6 +3,7 @@ import { Scene, Label, Font, Color, Timer } from "excalibur"
 class Cafe extends Scene {
 
     monthLoop;
+    incomeLoop;
     constructor(game) {
         super()
 
@@ -32,7 +33,7 @@ class Cafe extends Scene {
                     console.log(this.game.timerLeftInMonth);
                 } else {
                     this.game.timerLeftInMonth = 8;
-                    console.log("month is over!")
+                    this.game.increaseMonthlyRent();
                     console.log(this.game.timerLeftInMonth);
                 }
             },
@@ -40,12 +41,32 @@ class Cafe extends Scene {
             repeats: true
         });
         this.add(this.monthLoop);
+
+        this.incomeTimer();
+    }
+
+    incomeTimer() {
+        const randomInterval = Math.floor(Math.random() * 3000) + 1000;
+        this.incomeLoop = new Timer({
+
+            fcn: () => {
+                this.game.addIncome();
+                this.incomeTimer();
+            },
+            interval: randomInterval,
+            repeats: true
+        });
+        this.add(this.incomeLoop);
+
     }
 
     onActivate() {
-        console.log("Town activated!")
+        console.log("Je bent nu in het Café")
         console.log(this.game.timerLeftInMonth)
         this.monthLoop.start();
+        this.incomeLoop.start();
+
+
     }
 }
 
