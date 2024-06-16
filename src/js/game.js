@@ -1,6 +1,9 @@
-import { Engine, DisplayMode, Actor, Vector, Color } from "excalibur";
+import { Engine, DisplayMode, Vector } from "excalibur";
 import { Resources, ResourceLoader } from './resources.js';
 import { Npc } from "./npc.js";
+import { NpcPaid } from "./npcPaid.js"; // Import the new NpcPaid class
+import { Shop } from "./shop.js";
+import { SpawnPoint } from "./spawnPoint.js";
 
 export class Game extends Engine {
     constructor() {
@@ -11,18 +14,19 @@ export class Game extends Engine {
             displayMode: DisplayMode.FitScreen
         });
 
+        this.npcCount = 0;
+        this.maxNpcCount = 15;
+        this.npcs = [];
+        this.spawnPoints = [];
+        this.shops = [];
+
         this.start(ResourceLoader).then(() => this.startGame());
     }
 
     startGame() {
         console.log("start the game!");
 
-        // Create NPC and add it to the game
-        const npc = new Npc(100, 100);
-        this.add(npc);
-        console.log('npc created');
-
-        // Create red squares in each corner
+        // Create shops in each corner
         const corners = [
             new Vector(0, 0), // Top-left
             new Vector(1280 - 20, 0), // Top-right
@@ -30,16 +34,82 @@ export class Game extends Engine {
             new Vector(1280 - 20, 720 - 20) // Bottom-right
         ];
 
+        // Create spawn points in between the shops
+        const spawnPositions = [
+            new Vector(640 - 10, 0), // Middle-top
+            new Vector(1280 - 20, 360 - 10), // Middle-right
+            new Vector(640 - 10, 720 - 20), // Middle-bottom
+            new Vector(0, 360 - 10) // Middle-left
+        ];
+
+        // Create shops
         corners.forEach(corner => {
-            const square = new Actor({
-                pos: corner,
-                width: 20,
-                height: 20,
-                color: Color.Red
-            });
-            this.add(square);
+            const shop = new Shop(corner.x, corner.y);
+            this.add(shop);
+            this.shops.push(shop);
         });
+
+        // Create spawn points
+        spawnPositions.forEach(spawnPos => {
+            const spawnPoint = new SpawnPoint(spawnPos.x, spawnPos.y);
+            this.add(spawnPoint);
+            this.spawnPoints.push(spawnPoint);
+        });
+
+        // Spawn initial NPC
+        this.spawnNpc();
+
+        // Spawn NPCs every 3 seconds
+        this.spawnNpcInterval = setInterval(() => {
+            if (this.npcCount < this.maxNpcCount) {
+                this.spawnNpc();
+            }
+        }, 3000);
+
+        // Spawn NpcPaid every 5 seconds
+        this.spawnNpcPaidInterval = setInterval(() => {
+            this.spawnNpcPaid();
+        }, 5000);
+    }
+
+    spawnNpc() {
+        // Pick a random spawn point
+        if (this.spawnPoints.length > 0) {
+            const spawnPoint = this.spawnPoints[Math.floor(Math.random() * this.spawnPoints.length)];
+            const npc = new Npc(spawnPoint.pos.x, spawnPoint.pos.y, this); // Pass the game instance
+            this.add(npc);
+            this.npcs.push(npc);
+            this.npcCount++;
+            console.log('npc created, total:', this.npcCount);
+        } else {
+            console.error('No spawn points available');
+        }
+    }
+
+    spawnNpcPaid() {
+        // Pick a random shop with a score greater than 1
+        const eligibleShops = this.shops.filter(shop => shop.score >= 1);
+        if (eligibleShops.length > 0) {
+            const shop = eligibleShops[Math.floor(Math.random() * eligibleShops.length)];
+            const npcPaid = new NpcPaid(shop.pos.x, shop.pos.y, this, shop); // Pass the game instance and shop
+            this.add(npcPaid);
+            this.npcs.push(npcPaid);
+            this.npcCount++;
+            console.log('npcPaid created, total:', this.npcCount);
+        } else {
+            console.log('No eligible shops to spawn NpcPaid');
+        }
+    }
+
+    removeNpc(npc) {
+        this.remove(npc);
+        this.npcs = this.npcs.filter(n => n !== npc);
+        this.npcCount--;
+        console.log('npc removed, total:', this.npcCount);
     }
 }
 
 new Game();
+
+
+
