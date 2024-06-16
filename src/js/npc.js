@@ -1,7 +1,6 @@
 import { Actor, Vector, Random, CollisionType } from "excalibur";
 import { Resources } from "./resources.js";
 import { Shop } from "./shop.js";
-import { SpawnPoint } from "./spawnPoint.js";
 
 export class Npc extends Actor {
     constructor(x, y, game) {
@@ -51,11 +50,19 @@ export class Npc extends Actor {
     onPreCollision(evt) {
         if (evt.other instanceof Shop && !this.enteredShop) {
             const shop = evt.other;
+
+            // Check if it's the bottom-left shop
+            if (shop.pos.equals(new Vector(0, 720 - 20))) {
+                // Select a random product
+                const product = this.game.products[this.random.integer(0, this.game.products.length - 1)];
+                this.game.scoreBoard.addMoney(product.price);
+                console.log(`NPC bought ${product.name} for $${product.price}`);
+            }
+
             this.game.removeNpc(this);
             shop.incrementScore();
         }
     }
 }
-
 
 

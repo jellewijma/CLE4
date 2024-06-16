@@ -1,9 +1,11 @@
 import { Engine, DisplayMode, Vector } from "excalibur";
 import { Resources, ResourceLoader } from './resources.js';
 import { Npc } from "./npc.js";
-import { NpcPaid } from "./npcPaid.js"; // Import the new NpcPaid class
+import { NpcPaid } from "./npcPaid.js";
 import { Shop } from "./shop.js";
 import { SpawnPoint } from "./spawnPoint.js";
+import { Product } from "./product.js";
+import { ScoreBoard } from "./scoreboard.js";
 
 export class Game extends Engine {
     constructor() {
@@ -19,6 +21,7 @@ export class Game extends Engine {
         this.npcs = [];
         this.spawnPoints = [];
         this.shops = [];
+        this.products = []; // Add a property to store products
 
         this.start(ResourceLoader).then(() => this.startGame());
     }
@@ -55,6 +58,17 @@ export class Game extends Engine {
             this.add(spawnPoint);
             this.spawnPoints.push(spawnPoint);
         });
+
+        // Create products
+        this.products = [
+            new Product("Coffee", 3),
+            new Product("Sandwich", 8),
+            new Product("Smoothie", 5)
+        ];
+
+        // Create scoreboard
+        this.scoreBoard = new ScoreBoard(640, 360);
+        this.add(this.scoreBoard);
 
         // Spawn initial NPC
         this.spawnNpc();
@@ -110,6 +124,3 @@ export class Game extends Engine {
 }
 
 new Game();
-
-
-
