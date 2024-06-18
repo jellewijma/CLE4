@@ -1,11 +1,14 @@
 import { Scene, Label, Font, Color, Timer } from "excalibur"
 import { CreateTilemap } from "./loadTilemap";
+import { UI } from "./ui";
 
 class ShoppingCenter extends Scene {
 
     monthLoop;
 
     incomeLoop;
+
+    ui;
     constructor(game) {
         super()
 
@@ -36,7 +39,7 @@ class ShoppingCenter extends Scene {
                     console.log(this.game.timerLeftInMonth);
                 } else {
                     this.game.timerLeftInMonth = 8;
-                    this.game.increaseMonthlyRent();
+                    this.game.increaseMonthlyRent(this.ui);
                     console.log(this.game.timerLeftInMonth);
                 }
             },
@@ -45,6 +48,11 @@ class ShoppingCenter extends Scene {
         });
         this.add(this.monthLoop);
         this.incomeTimer();
+
+        this.ui = new UI();
+        this.ui.pos.x = 20;
+        this.ui.pos.y = 20;
+        this.add(this.ui);
     }
 
     incomeTimer() {
@@ -52,7 +60,7 @@ class ShoppingCenter extends Scene {
         this.incomeLoop = new Timer({
 
             fcn: () => {
-                this.game.addIncome();
+                this.game.addIncome(this.ui);
 
                 this.incomeTimer(); // Start de timer opnieuw met een nieuw willekeurig interval
             },

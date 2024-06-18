@@ -27,17 +27,23 @@ export class Game extends Engine {
         this.goToScene("shoppingcenter", { sceneActivationData: this.timerLeftInMonth });
     }
 
-    increaseMonthlyRent() {
+    increaseMonthlyRent(UI) {
+        if (this.balance < this.monthlyRent) {
+            console.log("Je hebt niet genoeg geld om de huur te betalen")
+            return;
+        }
         this.balance -= this.monthlyRent;
         this.monthlyRent += 50;
         console.log(`De maandhuur is nu ${this.monthlyRent}`)
         console.log(`Je hebt nu nog ${this.balance} op je rekening`)
+        UI.updateScore(this.balance);
     }
 
-    addIncome() {
+    addIncome(UI) {
         const income = 100// Math.floor(Math.random() * 1000) + 100;
         this.balance += income;
         console.log(`Je hebt ${income} ontvangen, je hebt nu ${this.balance} euro op je rekening`);
+        UI.updateScore(this.balance);
     }
 }
 
