@@ -1,11 +1,15 @@
 import { Scene, Label, Font, Color, Timer } from "excalibur"
 import { CoffeeMachine } from "./coffeeMachine";
+import { UI } from "./ui";
+
 
 class Cafe extends Scene {
 
     monthLoop;
     incomeLoop;
     coffeeMachine;
+
+    ui;
 
     constructor(game) {
         super()
@@ -38,7 +42,7 @@ class Cafe extends Scene {
                     // console.log(this.game.timerLeftInMonth);
                 } else {
                     this.game.timerLeftInMonth = 8;
-                    this.game.increaseMonthlyRent();
+                    this.game.increaseMonthlyRent(this.ui);
                 }
             },
             interval: 500,
@@ -46,6 +50,12 @@ class Cafe extends Scene {
         });
         this.add(this.monthLoop);
         this.incomeTimer();
+
+
+        this.ui = new UI();
+        this.ui.pos.x = 20;
+        this.ui.pos.y = 20;
+        this.add(this.ui);
     }
 
     incomeTimer() {
@@ -53,7 +63,7 @@ class Cafe extends Scene {
         this.incomeLoop = new Timer({
 
             fcn: () => {
-                this.game.addIncome();
+                this.game.addIncome(this.ui);
                 this.incomeTimer();
             },
             interval: randomInterval,
@@ -71,7 +81,7 @@ class Cafe extends Scene {
     }
 
     onInitialize() {
-        this.coffeeMachine = new CoffeeMachine(600, 400);
+        this.coffeeMachine = new CoffeeMachine(600, 400, this.ui);
         this.add(this.coffeeMachine);
     }
 
