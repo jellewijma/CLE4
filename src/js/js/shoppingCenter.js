@@ -1,4 +1,5 @@
 import { Scene, Label, Font, Color, Timer } from "excalibur"
+import { CreateTilemap } from "./loadTilemap";
 
 class ShoppingCenter extends Scene {
 
@@ -9,14 +10,15 @@ class ShoppingCenter extends Scene {
         super()
 
         this.game = game
-        this.backgroundColor = Color.Green
+        const createTileMap = new CreateTilemap();
+        this.add(createTileMap);
 
         // label increment
         let next = new Label({
             text: "Next Scene",
             color: Color.White,
-            x: 10,
-            y: 10,
+            x: 700,
+            y: 50,
             font: new Font({
                 size: 20,
                 family: 'Arial'

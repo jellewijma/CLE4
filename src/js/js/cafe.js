@@ -14,7 +14,7 @@ class Cafe extends Scene {
         let next = new Label({
             text: "Next Scene",
             color: Color.White,
-            x: 10,
+            x: 700,
             y: 10,
             font: new Font({
                 size: 20,
@@ -66,6 +66,10 @@ class Cafe extends Scene {
         this.monthLoop.start();
         this.incomeLoop.start();
 
+
+    }
+
+    onInitialize() {
 
     }
 }
