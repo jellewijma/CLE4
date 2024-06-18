@@ -24,15 +24,19 @@ export class NpcPaid extends Actor {
         shop.decrementScore();
 
         // Move to a random spawn point
-        this.moveToRandomSpawnPoint();
+        this.moveToCenter();
     }
 
-    // Method to move to a random spawn point
+    moveToCenter() {
+        const center = new Vector(640 - 10, 360 - 10);
+        this.actions.moveTo(center.x, center.y, 100).callMethod(() => this.moveToRandomSpawnPoint());
+    }
+
     moveToRandomSpawnPoint() {
         const spawnPoints = this.game.spawnPoints;
         if (spawnPoints.length > 0) {
             const randomSpawnPoint = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
-            this.actions.moveTo(randomSpawnPoint.pos.x, randomSpawnPoint.pos.y, 100); // 100 pixels per second
+            this.actions.moveTo(randomSpawnPoint.pos.x, randomSpawnPoint.pos.y, 100);
         }
     }
 

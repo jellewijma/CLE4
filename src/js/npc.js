@@ -17,30 +17,28 @@ export class Npc extends Actor {
         npcSprite.height = 20;
         this.graphics.use(npcSprite);
 
-        // Set up random movement
-        this.random = new Random();
-        this.moveRandomly();
-
         // Store reference to the game instance
         this.game = game;
 
         // Initialize enteredShop flag
         this.enteredShop = false;
+
+        // Initialize random instance
+        this.random = new Random();
+
+        // Set up movement along the path
+        this.moveToCenter();
     }
 
-    // Method to move to a random corner
-    moveRandomly() {
-        const corners = [
-            new Vector(0, 0), // Top-left
-            new Vector(1280 - 20, 0), // Top-right
-            new Vector(0, 720 - 20), // Bottom-left
-            new Vector(1280 - 20, 720 - 20) // Bottom-right
-        ];
-        const targetCorner = corners[this.random.integer(0, corners.length - 1)];
-        this.actions.moveTo(targetCorner.x, targetCorner.y, 100); // 100 pixels per second
+    moveToCenter() {
+        const center = new Vector(640 - 10, 360 - 10);
+        this.actions.moveTo(center.x, center.y, 100).callMethod(() => this.moveToRandomShop());
+    }
 
-        // Schedule the next random move
-        setTimeout(() => this.moveRandomly(), this.random.integer(1000, 3000)); // Move every 1 to 3 seconds
+    moveToRandomShop() {
+        const shops = this.game.shops;
+        const targetShop = shops[Math.floor(Math.random() * shops.length)];
+        this.actions.moveTo(targetShop.pos.x, targetShop.pos.y, 100);
     }
 
     onInitialize() {
@@ -61,8 +59,7 @@ export class Npc extends Actor {
 
             this.game.removeNpc(this);
             shop.incrementScore();
+            this.enteredShop = true; // Mark that the NPC has entered the shop
         }
     }
 }
-
-
