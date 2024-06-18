@@ -9,6 +9,7 @@ class ShoppingCenter extends Scene {
     incomeLoop;
 
     ui;
+    uiM;
     constructor(game) {
         super()
 
@@ -53,6 +54,13 @@ class ShoppingCenter extends Scene {
         this.ui.pos.x = 20;
         this.ui.pos.y = 20;
         this.add(this.ui);
+
+        // this.uiM = new UI();
+        // this.uiM.pos.x = 20;
+        // this.uiM.pos.y = 20;
+        // // this.uiM.text = "Maandhuur: 500";
+        // this.add(this.uiM);
+
     }
 
     incomeTimer() {
