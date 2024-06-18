@@ -9,6 +9,7 @@ export class Game extends Engine {
     timerLeftInMonth = 8;
     balance = 10000;
     monthlyRent = 500;
+    income = 100;
 
     constructor() {
         super({
@@ -35,9 +36,9 @@ export class Game extends Engine {
     }
 
     addIncome() {
-        const income = 100// Math.floor(Math.random() * 1000) + 100;
-        this.balance += income;
-        console.log(`Je hebt ${income} ontvangen, je hebt nu ${this.balance} euro op je rekening`);
+        // Math.floor(Math.random() * 1000) + 100;
+        this.balance += this.income;
+        console.log(`Je hebt ${this.income} ontvangen, je hebt nu ${this.balance} euro op je rekening`);
     }
 }
 

@@ -1,15 +1,19 @@
 import { Scene, Label, Font, Color, Timer } from "excalibur"
+import { CoffeeMachine } from "./coffeeMachine";
 
 class Cafe extends Scene {
 
     monthLoop;
     incomeLoop;
+    coffeeMachine;
 
     constructor(game) {
         super()
 
         this.game = game
         this.backgroundColor = Color.Gray
+
+
 
         // label increment
         let next = new Label({
@@ -31,11 +35,11 @@ class Cafe extends Scene {
             fcn: () => {
                 if (this.game.timerLeftInMonth > 0) {
                     this.game.timerLeftInMonth--;
-                    console.log(this.game.timerLeftInMonth);
+                    // console.log(this.game.timerLeftInMonth);
                 } else {
                     this.game.timerLeftInMonth = 8;
                     this.game.increaseMonthlyRent();
-                    console.log(this.game.timerLeftInMonth);
+                    // console.log(this.game.timerLeftInMonth);
                 }
             },
             interval: 500,
@@ -70,8 +74,11 @@ class Cafe extends Scene {
     }
 
     onInitialize() {
-
+        this.coffeeMachine = new CoffeeMachine(600, 400);
+        this.add(this.coffeeMachine);
     }
+
+
 }
 
 
