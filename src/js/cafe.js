@@ -4,6 +4,7 @@ class Cafe extends Scene {
 
     monthLoop;
     incomeLoop;
+
     constructor(game) {
         super()
 
@@ -41,7 +42,6 @@ class Cafe extends Scene {
             repeats: true
         });
         this.add(this.monthLoop);
-
         this.incomeTimer();
     }
 

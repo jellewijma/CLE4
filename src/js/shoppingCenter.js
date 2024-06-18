@@ -4,8 +4,8 @@ import { CreateTilemap } from "./loadTilemap";
 class ShoppingCenter extends Scene {
 
     monthLoop;
-    incomeLoop;
 
+    incomeLoop;
     constructor(game) {
         super()
 

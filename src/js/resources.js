@@ -5,7 +5,6 @@ import { TiledResource } from '@excaliburjs/plugin-tiled'
 const Resources = {
 
     TiledMapResource: new TiledResource('public/assets/tilemap/cle4-map.tmx')
-
 }
 
 const ResourceLoader = new Loader()
