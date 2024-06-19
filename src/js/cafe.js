@@ -39,7 +39,6 @@ class Cafe extends Scene {
                 } else {
                     this.game.timerLeftInMonth = 8;
                     this.game.increaseMonthlyRent();
-                    // console.log(this.game.timerLeftInMonth);
                 }
             },
             interval: 500,
@@ -69,8 +68,6 @@ class Cafe extends Scene {
         console.log(this.game.timerLeftInMonth)
         this.monthLoop.start();
         this.incomeLoop.start();
-
-
     }
 
     onInitialize() {
