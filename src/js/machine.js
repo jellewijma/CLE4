@@ -3,7 +3,8 @@ import { Actor, Vector, Color, Label, Font } from "excalibur";
 export class Machine extends Actor {
 
 
-    constructor(x, y, upgradeCost, sprite) {
+
+    constructor(x, y, ui, upgradeCost, sprite) {
         super({
             pos: new Vector(x, y),
             width: 50,
@@ -16,6 +17,7 @@ export class Machine extends Actor {
         this.upgradeCost = upgradeCost;
         this.incomeIncrease = 200;
         console.log(this.upgradeCost)
+        this.ui = ui
     }
 
     onInitialize(engine) {
@@ -32,6 +34,7 @@ export class Machine extends Actor {
 
         const background = new Actor({
             pos: new Vector(posX, posY),
+
             width: 320,
             height: 100,
             color: Color.White,
@@ -70,6 +73,7 @@ export class Machine extends Actor {
         upgradeLabel.on('pointerdown', () => {
             if (engine.balance >= this.upgradeCost) {
                 engine.balance -= this.upgradeCost;
+                this.ui.updateScore(engine.balance);
                 engine.income += this.incomeIncrease;
                 this.level++;
                 this.hideUpgradeOptions();
@@ -84,6 +88,7 @@ export class Machine extends Actor {
         });
 
         engine.add(background);
+
         if (this.level < 3) {
             engine.add(upgradeLabel);
         }
