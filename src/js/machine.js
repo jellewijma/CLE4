@@ -96,6 +96,7 @@ export class Machine extends Actor {
         });
 
         engine.add(background);
+
         if (this.level < 2) {
             engine.add(upgradeLabel);
         }
