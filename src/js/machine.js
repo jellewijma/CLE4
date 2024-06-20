@@ -19,6 +19,12 @@ export class Machine extends Actor {
         this.resourceName = `${this.spritePrefix}Level1`;
         this.graphics.use(Resources[this.resourceName].toSprite())
         console.log(this.upgradeCost)
+        this.ui = ui
+    }
+
+    updateSprite() {
+        this.resourceName = `${this.spritePrefix}Level${this.level}`;
+        this.graphics.use(Resources[this.resourceName].toSprite());
     }
 
     updateSprite() {
@@ -40,6 +46,7 @@ export class Machine extends Actor {
 
         const background = new Actor({
             pos: new Vector(posX, posY),
+
             width: 320,
             height: 100,
             color: Color.White,
@@ -78,6 +85,7 @@ export class Machine extends Actor {
         upgradeLabel.on('pointerdown', () => {
             if (engine.balance >= this.upgradeCost) {
                 engine.balance -= this.upgradeCost;
+                this.ui.updateScore(engine.balance);
                 engine.income += this.incomeIncrease;
                 this.level++;
                 this.updateSprite();
