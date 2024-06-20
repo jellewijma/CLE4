@@ -4,7 +4,7 @@ import { Resources } from "./resources";
 export class Machine extends Actor {
 
     resourceName;
-    constructor(x, y, upgradeCost, spritePrefix) {
+    constructor(x, y, ui, upgradeCost, spritePrefix) {
         super({
             pos: new Vector(x, y),
             width: 50,
@@ -20,11 +20,6 @@ export class Machine extends Actor {
         this.graphics.use(Resources[this.resourceName].toSprite())
         console.log(this.upgradeCost)
         this.ui = ui
-    }
-
-    updateSprite() {
-        this.resourceName = `${this.spritePrefix}Level${this.level}`;
-        this.graphics.use(Resources[this.resourceName].toSprite());
     }
 
     updateSprite() {
