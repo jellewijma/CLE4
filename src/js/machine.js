@@ -1,9 +1,10 @@
 import { Actor, Vector, Color, Label, Font } from "excalibur";
+import { Resources } from "./resources";
 
 export class Machine extends Actor {
 
-
-    constructor(x, y, upgradeCost, sprite) {
+    resourceName;
+    constructor(x, y, upgradeCost, spritePrefix) {
         super({
             pos: new Vector(x, y),
             width: 50,
@@ -11,11 +12,18 @@ export class Machine extends Actor {
             color: Color.Black,
         })
 
-        this.sprite = sprite;
+        this.spritePrefix = spritePrefix;
         this.level = 1;
         this.upgradeCost = upgradeCost;
         this.incomeIncrease = 200;
+        this.resourceName = `${this.spritePrefix}Level1`;
+        this.graphics.use(Resources[this.resourceName].toSprite())
         console.log(this.upgradeCost)
+    }
+
+    updateSprite() {
+        this.resourceName = `${this.spritePrefix}Level${this.level}`;
+        this.graphics.use(Resources[this.resourceName].toSprite());
     }
 
     onInitialize(engine) {
@@ -72,6 +80,7 @@ export class Machine extends Actor {
                 engine.balance -= this.upgradeCost;
                 engine.income += this.incomeIncrease;
                 this.level++;
+                this.updateSprite();
                 this.hideUpgradeOptions();
                 console.log(`koffie apparaat is nu level ${this.level}`);
             } else {
@@ -84,7 +93,7 @@ export class Machine extends Actor {
         });
 
         engine.add(background);
-        if (this.level < 3) {
+        if (this.level < 2) {
             engine.add(upgradeLabel);
         }
         engine.add(cancelLabel);
