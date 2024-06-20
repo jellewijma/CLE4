@@ -67,61 +67,51 @@ class ShoppingCenter extends Scene {
         this.swipeStartPos = null;
         this.lastPointerPos = null;
 
-        // Listen for pointer events'
-        // this.game.input.pointers.primary.on('move', (evt) => {
-        //     console.log("Pointer move");
-        //     if (this.lastPointerPos) {
-        //         const deltaX = evt.worldPos.x - this.lastPointerPos.x;
-        //         this.game.currentScene.camera.pos.x -= deltaX;
-        //     }
-        //     this.lastPointerPos = evt.worldPos;
-        // }
-        // );
-        // this.game.input.pointers.primary.on('down', (evt) => {
-        //     console.log("Pointer move");
-        //     if (this.lastPointerPos) {
-        //         const deltaX = evt.worldPos.x - this.lastPointerPos.x;
-        //         this.game.currentScene.camera.pos.x -= deltaX;
-        //     }
-        //     this.lastPointerPos = evt.worldPos;
-        // }
-        // );
-        // this.on('pointerdown', this.onPointerDown.bind(this));
-        // this.on('pointermove', this.onPointerMove.bind(this));
-        // this.on('pointerup', this.onPointerUp.bind(this));
-        this.game.input.pointers.primary.on('down', this.onPointerDown.bind(this));
-        this.game.input.pointers.primary.on('move', this.onPointerMove.bind(this));
-        this.game.input.pointers.primary.on('up', this.onPointerUp.bind(this));
+        this.game.input.pointers.primary.on('move', this.handleMove.bind(this));
+        this.game.input.pointers.primary.on('down', this.handleDown.bind(this));
+        document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
+        document.addEventListener('touchstart', this.handleDown.bind(this), { passive: false });
+        document.addEventListener('touchend', this.onPointerUp.bind(this), { passive: false });
 
     }
 
-    onPointerDown(evt) {
-        console.log("Pointer down");
-        this.swipeStartPos = { x: evt.worldPos.x, y: evt.worldPos.y };
+    // Handle pointer/touch start
+    handleDown(evt) {
+        if (evt && typeof evt.preventDefault === 'function') {
+            evt.preventDefault();
+        }
+        let worldPos = this.getWorldPos(evt);
+        console.log("Pointer/touch down");
+        this.swipeStartPos = { x: worldPos.x, y: worldPos.y };
         this.isSwiping = true;
     }
 
-    onPointerMove(evt) {
-        console.log("Pointer move");
-        if (!this.isSwiping || !this.swipeStartPos) return;
-
-        const deltaX = evt.worldPos.x - this.swipeStartPos.x;
-        // Optional: Implement vertical swiping with deltaY
-        // const deltaY = evt.worldPos.y - this.swipeStartPos.y;
-
-        // Adjust the camera based on deltaX
-        if (Math.abs(deltaX) > 10) { // Threshold to detect swipe
-            this.game.currentScene.camera.pos.x -= deltaX;
-            this.swipeStartPos = { x: evt.worldPos.x, y: evt.worldPos.y }; // Reset start position for continuous swiping
+    // Handle pointer/touch move
+    handleMove(evt) {
+        if (evt && typeof evt.preventDefault === 'function') {
+            evt.preventDefault();
         }
+        if (!this.isSwiping) return;
+        let worldPos = this.getWorldPos(evt);
+        console.log("Pointer/touch move");
+        if (this.lastPointerPos) {
+            const deltaX = worldPos.x - this.lastPointerPos.x;
+            this.game.currentScene.camera.pos.x -= deltaX;
+        }
+        this.lastPointerPos = worldPos;
     }
 
-    onPointerUp() {
-        console.log("Pointer up");
+    // Handle pointer/touch end
+    onPointerUp(evt) {
         this.isSwiping = false;
-        this.swipeStartPos = null;
+        this.lastPointerPos = null;
     }
 
+    // Utility function to normalize touch and pointer positions
+    getWorldPos(evt) {
+        let pos = evt.touches ? evt.touches[0] : evt;
+        return { x: pos.clientX, y: pos.clientY }; // Assuming worldPos can be derived from clientX/Y for simplicity
+    }
     incomeTimer() {
         const randomInterval = Math.floor(Math.random() * 3000) + 1000;
         this.incomeLoop = new Timer({
