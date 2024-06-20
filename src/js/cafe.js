@@ -1,4 +1,4 @@
-import { Scene, Label, Font, Color, Timer } from "excalibur"
+import {Scene, Label, Font, Color, Timer, Vector} from "excalibur"
 
 class Cafe extends Scene {
 
@@ -57,23 +57,34 @@ class Cafe extends Scene {
             repeats: true
         });
         this.add(this.incomeLoop);
+    }
 
+    addNpcToCafe(npc) {
+        this.add(npc);
+        npc.pos = new Vector(100 + Math.random() * 400, 100 + Math.random() * 400); // Position NPCs randomly in the cafe
+    }
+
+    removeNpcFromCafe(npc) {
+        this.remove(npc);
     }
 
     onActivate() {
-        console.log("Je bent nu in het Café")
-        console.log(this.game.timerLeftInMonth)
+        console.log("Je bent nu in het Café");
+        console.log(this.game.timerLeftInMonth);
+
+        // Add NPCs that are in the cafe
+        this.game.npcsInCafe.forEach(npc => {
+            this.addNpcToCafe(npc);
+        });
+
         this.monthLoop.start();
         this.incomeLoop.start();
-
-
     }
 
-    onInitialize() {
-
+    onDeactivate() {
+        this.monthLoop.stop();
+        this.incomeLoop.stop();
     }
 }
-
-
 
 export { Cafe }

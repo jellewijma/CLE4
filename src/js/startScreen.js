@@ -39,7 +39,7 @@ export class StartScreen extends Scene {
 
         // Add an event handler for button clicks
         startButton.on('pointerup', () => {
-            engine.goToScene('game');
+            engine.goToScene('shoppingcenter');
         });
 
         this.add(title);
