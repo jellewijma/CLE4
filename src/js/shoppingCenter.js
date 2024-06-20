@@ -61,6 +61,65 @@ class ShoppingCenter extends Scene {
         // // this.uiM.text = "Maandhuur: 500";
         // this.add(this.uiM);
 
+
+        // Swipe tracking
+        this.isSwiping = false;
+        this.swipeStartPos = null;
+        this.lastPointerPos = null;
+
+        // Listen for pointer events'
+        // this.game.input.pointers.primary.on('move', (evt) => {
+        //     console.log("Pointer move");
+        //     if (this.lastPointerPos) {
+        //         const deltaX = evt.worldPos.x - this.lastPointerPos.x;
+        //         this.game.currentScene.camera.pos.x -= deltaX;
+        //     }
+        //     this.lastPointerPos = evt.worldPos;
+        // }
+        // );
+        // this.game.input.pointers.primary.on('down', (evt) => {
+        //     console.log("Pointer move");
+        //     if (this.lastPointerPos) {
+        //         const deltaX = evt.worldPos.x - this.lastPointerPos.x;
+        //         this.game.currentScene.camera.pos.x -= deltaX;
+        //     }
+        //     this.lastPointerPos = evt.worldPos;
+        // }
+        // );
+        // this.on('pointerdown', this.onPointerDown.bind(this));
+        // this.on('pointermove', this.onPointerMove.bind(this));
+        // this.on('pointerup', this.onPointerUp.bind(this));
+        this.game.input.pointers.primary.on('down', this.onPointerDown.bind(this));
+        this.game.input.pointers.primary.on('move', this.onPointerMove.bind(this));
+        this.game.input.pointers.primary.on('up', this.onPointerUp.bind(this));
+
+    }
+
+    onPointerDown(evt) {
+        console.log("Pointer down");
+        this.swipeStartPos = { x: evt.worldPos.x, y: evt.worldPos.y };
+        this.isSwiping = true;
+    }
+
+    onPointerMove(evt) {
+        console.log("Pointer move");
+        if (!this.isSwiping || !this.swipeStartPos) return;
+
+        const deltaX = evt.worldPos.x - this.swipeStartPos.x;
+        // Optional: Implement vertical swiping with deltaY
+        // const deltaY = evt.worldPos.y - this.swipeStartPos.y;
+
+        // Adjust the camera based on deltaX
+        if (Math.abs(deltaX) > 10) { // Threshold to detect swipe
+            this.game.currentScene.camera.pos.x -= deltaX;
+            this.swipeStartPos = { x: evt.worldPos.x, y: evt.worldPos.y }; // Reset start position for continuous swiping
+        }
+    }
+
+    onPointerUp() {
+        console.log("Pointer up");
+        this.isSwiping = false;
+        this.swipeStartPos = null;
     }
 
     incomeTimer() {
