@@ -44,7 +44,6 @@ export class Game extends Engine {
     }
 
     addIncome(UI) {
-        const income = 100// Math.floor(Math.random() * 1000) + 100;
         this.balance += this.income;
         console.log(`Je hebt ${this.income} ontvangen, je hebt nu ${this.balance} euro op je rekening`);
         UI.updateScore(this.balance);
