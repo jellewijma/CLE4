@@ -7,7 +7,7 @@ export class SpawnPoint extends Actor {
             width: 20,
             height: 20,
             color: Color.Green,
-            collisionType: CollisionType.Fixed // No collision needed for spawn points
+            collisionType: CollisionType.Fixed, // No collision needed for spawn points
         });
     }
 }

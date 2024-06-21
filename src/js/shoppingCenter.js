@@ -7,6 +7,8 @@ import { SpawnPoint } from "./spawnPoint.js";
 import { Product } from "./product.js";
 import { ScoreBoard } from "./scoreboard.js";
 import { Path } from "./path.js";
+import { Border } from "./border.js"; // Import Border class
+import { Checkpoint } from "./checkpoint.js"; // Import Checkpoint class
 
 class ShoppingCenter extends Scene {
     constructor(game) {
@@ -14,6 +16,7 @@ class ShoppingCenter extends Scene {
         this.game = game;
         this.monthLoop = null;
         this.incomeLoop = null;
+        this.checkpoints = [];
     }
 
     onInitialize(engine) {
@@ -46,13 +49,10 @@ class ShoppingCenter extends Scene {
 
         // Create spawn points
         const spawnPositions = [
-            new Vector(850 - 10, 100),//top
-            new Vector(1100 - 20, 270 - 10),//right-top
-            new Vector(1100 - 20, 470 - 10),//right-bottom
-            new Vector(640 - 10, 600 - 20),//bottom-right
-            new Vector(330 - 10, 600 - 20),//bottom-left
-            new Vector(100, 270 - 10),//left-top
-            new Vector(100, 470 - 10)//left-bottom
+            new Vector(1070 - 20, 330 - 10),//right-top
+            new Vector(1070 - 20, 370 - 10),//right-top
+            new Vector(150, 330 - 10),//left-top
+            new Vector(150, 370 - 10),//left-top
 
         ];
 
@@ -105,6 +105,21 @@ class ShoppingCenter extends Scene {
 
         // Initialize loops
         this.initLoops();
+
+        const border = new Border();
+        this.add(border);
+
+        // Add checkpoints
+        this.addCheckpoint(250, 180);// top left
+        this.addCheckpoint(960, 180);// top right
+        this.addCheckpoint(250, 480);// bottom left
+        this.addCheckpoint(960, 480);
+    }
+
+    addCheckpoint(x, y) {
+        const checkpoint = new Checkpoint(x, y);
+        this.add(checkpoint);
+        this.checkpoints.push(checkpoint);
     }
 
     spawnNpc() {

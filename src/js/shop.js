@@ -7,7 +7,7 @@ export class Shop extends Actor {
             width: 20,
             height: 20,
             color: Color.Red,
-            collisionType: CollisionType.Fixed // Set collision type
+            collisionType: CollisionType.Fixed, // Set collision type
         });
 
         // Initialize score

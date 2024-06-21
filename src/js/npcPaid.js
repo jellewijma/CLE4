@@ -1,6 +1,7 @@
-import { Actor, Vector, CollisionType } from "excalibur";
+import { Actor, Vector, CollisionType, Color, Circle } from "excalibur";
 import { Resources } from "./resources.js";
 import { SpawnPoint } from "./spawnPoint.js";
+import { Checkpoint } from "./checkpoint.js"; // Ensure the Checkpoint class is imported
 
 export class NpcPaid extends Actor {
     constructor(x, y, game, shop) {
@@ -23,21 +24,50 @@ export class NpcPaid extends Actor {
         // Decrease the shop score by 1
         shop.decrementScore();
 
-        // Move to a random spawn point
-        this.moveToCenter();
+        // Move towards the nearest checkpoint
+        this.moveToNearestCheckpoint();
     }
 
-    moveToCenter() {
-        const center = new Vector(640 - 10, 360 - 10);
-        this.actions.moveTo(center.x, center.y, 100).callMethod(() => this.moveToRandomSpawnPoint());
+    moveToNearestCheckpoint() {
+        // Find the nearest checkpoint
+        const nearestCheckpoint = this.findNearestCheckpoint();
+        if (nearestCheckpoint) {
+            this.actions.moveTo(nearestCheckpoint.pos.x, nearestCheckpoint.pos.y, 100)
+                .callMethod(() => this.moveToRandomSpawnPoint());
+        } else {
+            console.log('No checkpoints available');
+        }
+    }
+
+    findNearestCheckpoint() {
+        const checkpoints = this.game.currentScene.checkpoints;
+        let nearestCheckpoint = null;
+        let minDistance = Number.MAX_VALUE;
+
+        checkpoints.forEach(checkpoint => {
+            const distance = this.pos.distance(checkpoint.pos);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestCheckpoint = checkpoint;
+            }
+        });
+
+        return nearestCheckpoint;
     }
 
     moveToRandomSpawnPoint() {
         const spawnPoints = this.game.spawnPoints;
         if (spawnPoints.length > 0) {
             const randomSpawnPoint = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
-            this.actions.moveTo(randomSpawnPoint.pos.x, randomSpawnPoint.pos.y, 100);
+            this.actions.moveTo(randomSpawnPoint.pos.x, randomSpawnPoint.pos.y, 100)
+                .callMethod(() => this.despawn());
+        } else {
+            console.log('No spawn points available');
         }
+    }
+
+    despawn() {
+        this.game.removeNpc(this);
     }
 
     onInitialize() {
@@ -45,8 +75,8 @@ export class NpcPaid extends Actor {
     }
 
     onPreCollision(evt) {
-        if (evt.other instanceof SpawnPoint) {
-            this.game.removeNpc(this);
+        if (evt.other instanceof Checkpoint) {
+            this.moveToRandomSpawnPoint();
         }
     }
 }
