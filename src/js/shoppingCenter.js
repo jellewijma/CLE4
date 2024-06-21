@@ -23,6 +23,7 @@ class ShoppingCenter extends Scene {
             color: Color.White,
             x: 700,
             y: 50,
+            z: 10,
             font: new Font({
                 size: 20,
                 family: 'Arial'
@@ -51,8 +52,8 @@ class ShoppingCenter extends Scene {
         this.incomeTimer();
 
         this.ui = new UI();
-        this.ui.pos.x = 20;
-        this.ui.pos.y = 20;
+        this.ui.pos.x = 10;
+        this.ui.pos.y = 10;
         this.add(this.ui);
 
         // this.uiM = new UI();
@@ -96,7 +97,17 @@ class ShoppingCenter extends Scene {
         console.log("Pointer/touch move");
         if (this.lastPointerPos) {
             const deltaX = worldPos.x - this.lastPointerPos.x;
-            this.game.currentScene.camera.pos.x -= deltaX;
+
+            // not outside the map
+            if (this.game.currentScene.camera.pos.x - deltaX < 145) {
+                this.game.currentScene.camera.pos.x = 145;
+                console.log("niet verder dan 0")
+            } else if (this.game.currentScene.camera.pos.x - deltaX > 992 - 146) {
+                this.game.currentScene.camera.pos.x = 992 - 146;
+                console.log("niet verder dan 500")
+            } else {
+                this.game.currentScene.camera.pos.x -= deltaX;
+            }
         }
         this.lastPointerPos = worldPos;
     }
