@@ -14,10 +14,12 @@ export class Game extends Engine {
 
     constructor() {
         super({
-            width: 1248,
-            height: 704,
+            width: 288,
+            height: 512,
             maxFps: 60,
-            //displayMode: DisplayMode.FitScreen
+            pixelArt: true,
+            displayMode: DisplayMode.FitScreen,
+            antialiasing: false
         });
         this.start(ResourceLoader).then(() => this.startGame());
     }
