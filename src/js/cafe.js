@@ -2,7 +2,6 @@ import { Scene, Label, Font, Color, Timer } from "excalibur"
 import { CoffeeMachine } from "./coffeeMachine";
 import { UI } from "./ui";
 
-
 class Cafe extends Scene {
 
     monthLoop;

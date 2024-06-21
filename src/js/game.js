@@ -14,10 +14,12 @@ export class Game extends Engine {
 
     constructor() {
         super({
-            width: 1248,
-            height: 704,
+            width: 288,
+            height: 512,
             maxFps: 60,
-            //displayMode: DisplayMode.FitScreen
+            pixelArt: true,
+            displayMode: DisplayMode.FitScreen,
+            antialiasing: false
         });
         this.start(ResourceLoader).then(() => this.startGame());
     }
@@ -44,7 +46,6 @@ export class Game extends Engine {
     }
 
     addIncome(UI) {
-        const income = 100// Math.floor(Math.random() * 1000) + 100;
         this.balance += this.income;
         console.log(`Je hebt ${this.income} ontvangen, je hebt nu ${this.balance} euro op je rekening`);
         UI.updateScore(this.balance);
