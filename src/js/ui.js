@@ -9,12 +9,12 @@ class UI extends ScreenElement {
 
         this.score = new Label({
             text: 'Balance: 0',
-            x: 20,
-            y: 20,
+            x: 10,
+            y: 10,
             width: 100,
             height: 20,
             font: new Font({
-                size: 64,
+                size: 16,
                 color: Color.White
             })
         })
