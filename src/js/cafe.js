@@ -71,20 +71,20 @@ class Cafe extends Scene {
         this.add(this.incomeLoop);
     }
 
-    addNpcToCafe(npc) {
-        this.add(npc);
-        npc.pos = new Vector(100 + Math.random() * 400, 100 + Math.random() * 400); // Position NPCs randomly in the cafe
-    }
+    // addNpcToCafe(npc) {
+    //     this.add(npc);
+    //     npc.pos = new Vector(100 + Math.random() * 400, 100 + Math.random() * 400); // Position NPCs randomly in the cafe
+    // }
 
-    removeNpcFromCafe(npc) {
-        this.remove(npc);
-    }
+    // removeNpcFromCafe(npc) {
+    //     this.remove(npc);
+    // }
 
     onActivate() {
         // Add NPCs that are in the cafe
-        this.game.npcsInCafe.forEach(npc => {
-            this.addNpcToCafe(npc);
-        });
+        // this.game.npcsInCafe.forEach(npc => {
+        //     this.addNpcToCafe(npc);
+        // });
 
 
         // Resources.TiledMapResource.addToScene(this.game.currentScene);
@@ -98,7 +98,7 @@ class Cafe extends Scene {
         this.incomeLoop.stop();
     }
 
-  
+
     onInitialize() {
         this.coffeeMachine = new CoffeeMachine(112, 98, this.ui);
         this.add(this.coffeeMachine);

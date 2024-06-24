@@ -1,7 +1,6 @@
 
 import { Engine, DisplayMode, Scene } from 'excalibur';
 import { Resources, ResourceLoader } from './resources.js';
-import { StartScreen } from './startScreen.js';
 import { Cafe } from './cafe.js';
 import { ShoppingCenter } from './shoppingCenter.js';
 import { End } from './end.js';
@@ -24,36 +23,32 @@ export class Game extends Engine {
 
 
         // Properties from both versions
-        this.npcCount = 0;
-        this.maxNpcCount = 15;
-        this.npcs = [];
-        this.spawnPoints = [];
-        this.shops = [];
-        this.products = [];
+        // this.npcCount = 0;
+        // this.maxNpcCount = 15;
+        // this.npcs = [];
+        // this.spawnPoints = [];
+        // this.shops = [];
+        // this.products = [];
         // NPCs in the cafe
-        this.npcsInCafe = [];
+        // this.npcsInCafe = [];
 
         // New properties from the second version
         this.timerLeftInMonth = 8;
         this.balance = 10000;
         this.monthlyRent = 500;
 
-        this.start(ResourceLoader).then(() => {
 
+
+        this.start(ResourceLoader).then(() => {
             this.startGame();
         });
     }
 
-    addScenes() {
-        this.add('startScreen', new StartScreen());
-        this.add('cafe', new Cafe(this));
-        this.add('shoppingcenter', new ShoppingCenter(this));
-        this.add('end', new End(this));
-    }
-
-
     startGame() {
         console.log("start de game!");
+        this.add("cafe", new Cafe(this));
+        this.add("shoppingcenter", new ShoppingCenter(this));
+        this.add("end", new End(this));
         this.goToScene("shoppingcenter", { sceneActivationData: this.timerLeftInMonth });
     }
 
@@ -77,42 +72,30 @@ export class Game extends Engine {
         UI.updateScore(this.balance);
     }
 
-    removeNpc(npc) {
-        this.remove(npc);
-        this.npcs = this.npcs.filter(n => n !== npc);
-        this.npcCount--;
-        console.log('npc removed, total:', this.npcCount);
-    }
+    // removeNpc(npc) {
+    //     this.remove(npc);
+    //     this.npcs = this.npcs.filter(n => n !== npc);
+    //     this.npcCount--;
+    //     console.log('npc removed, total:', this.npcCount);
+    // }
 
-    transferNpcToCafe(npc) {
-        this.removeNpc(npc);
-        this.npcsInCafe.push(npc);
-        if (this.currentScene instanceof Cafe) {
-            this.currentScene.addNpcToCafe(npc);
-        }
-    }
+    // transferNpcToCafe(npc) {
+    //     this.removeNpc(npc);
+    //     this.npcsInCafe.push(npc);
+    //     if (this.currentScene instanceof Cafe) {
+    //         this.currentScene.addNpcToCafe(npc);
+    //     }
+    // }
 
-    removeNpcFromCafe(npc) {
-        this.npcsInCafe = this.npcsInCafe.filter(n => n !== npc);
-        if (this.currentScene instanceof Cafe) {
-            this.currentScene.removeNpcFromCafe(npc);
-        }
-    }
+    // removeNpcFromCafe(npc) {
+    //     this.npcsInCafe = this.npcsInCafe.filter(n => n !== npc);
+    //     if (this.currentScene instanceof Cafe) {
+    //         this.currentScene.removeNpcFromCafe(npc);
+    //     }
+    // }
 
 
 }
-
-class MainGameScene extends Scene {
-    constructor(game) {
-        super(game);
-        this.game = game;
-    }
-
-    onInitialize(engine) {
-        this.game.startGame();
-    }
-}
-
 new Game();
 
 import '../css/style.css';
