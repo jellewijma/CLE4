@@ -1,6 +1,9 @@
 import { Actor, Color, Vector, Timer, Label, Font } from 'excalibur';
 
 export class Competitor extends Actor {
+
+    static bankruptShops = [];
+
     constructor(name, position) {
         super({
             pos: new Vector(position.x, position.y),
@@ -10,7 +13,7 @@ export class Competitor extends Actor {
         });
 
         this.name = name;
-        this.balance = 2000;  // Begin saldo
+        this.balance = 10000;  // Begin saldo
         this.income = this.getRandomIncome();  // Willekeurig inkomen
 
         this.on('pointerdown', () => {
@@ -26,7 +29,7 @@ export class Competitor extends Actor {
     }
 
     getRandomIncome() {
-        const incomeArray = [500, 700, 1000, 1200, 1500];
+        const incomeArray = [500];
         return incomeArray[Math.floor(Math.random() * incomeArray.length)];
     }
 
@@ -54,18 +57,27 @@ export class Competitor extends Actor {
     }
 
     opponentGameOver(game) {
+        Competitor.bankruptShops.push(this.name);
         console.log(`${this.name} is bankrupt`);
+        if (Competitor.bankruptShops.length === 3) { // Aanname: er zijn in totaal 5 tegenstanders
+            Competitor.bankruptShops.push('jij')
+            game.goToScene("end"); // Aanname: deze methode schakelt over naar de eindscene
+        }
         this.showBankruptMessage(game)
-        this.kill();
+        console.log(Competitor.bankruptShops)
+
+
     }
+
+
 
     showBankruptMessage(game) {
 
         const message = new Label({
             text: `${this.name} is failliet`,
-            pos: new Vector(624, 352),  // Midden van het scherm
+            pos: new Vector(207, 230),  // Midden van het scherm
             font: new Font({
-                size: 50,
+                size: 20,
                 color: Color.Red,
                 textAlign: 'center'
             })
@@ -78,6 +90,7 @@ export class Competitor extends Actor {
         const timer = new Timer({
             fcn: () => {
                 message.kill();
+                this.kill()
             },
             interval: 3000,
             repeats: false

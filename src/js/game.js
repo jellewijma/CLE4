@@ -7,9 +7,9 @@ import { Competitor } from './competitor.js';
 
 export class Game extends Engine {
     timerLeftInMonth = 8;
-    balance = 10000;
+    balance = 700;
     monthlyRent = 1000;
-    income = 1000;
+    income = 100;
 
     constructor() {
         super({
@@ -35,8 +35,8 @@ export class Game extends Engine {
 
         // New properties from the second version
         this.timerLeftInMonth = 8;
-        this.balance = 10000;
-        this.monthlyRent = 500;
+        this.balance = 900;
+        this.monthlyRent = 1000;
 
         this.start(ResourceLoader).then(() => this.startGame());
         this.backgroundMusic = Resources.BackgroundMusic;
@@ -60,6 +60,12 @@ export class Game extends Engine {
     increaseMonthlyRent(UI) {
         if (this.balance < this.monthlyRent) {
             console.log("Je hebt niet genoeg geld om de huur te betalen")
+            Competitor.bankruptShops.push("Jij");
+            Competitor.bankruptShops.push("Dunkin Donuts");
+            Competitor.bankruptShops.push("Mac Donalds");
+            Competitor.bankruptShops.push("Burger King");
+            Competitor.bankruptShops.push("KFC");
+            this.goToScene("end");
             this.goToScene('end')
             return;
         }

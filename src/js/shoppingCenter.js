@@ -123,7 +123,7 @@ class ShoppingCenter extends Scene {
             this.add(npc);
             this.game.npcs.push(npc);
             this.game.npcCount++;
-            console.log('npc created, total:', this.game.npcCount);
+            // console.log('npc created, total:', this.game.npcCount);
         } else {
             console.error('No spawn points available');
         }
@@ -138,9 +138,9 @@ class ShoppingCenter extends Scene {
             this.add(npcPaid);
             this.game.npcs.push(npcPaid);
             this.game.npcCount++;
-            console.log('npcPaid created, total:', this.game.npcCount);
+            // console.log('npcPaid created, total:', this.game.npcCount);
         } else {
-            console.log('No eligible shops to spawn NpcPaid');
+            // console.log('No eligible shops to spawn NpcPaid');
         }
     }
 
@@ -176,13 +176,15 @@ class ShoppingCenter extends Scene {
         document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
         document.addEventListener('touchstart', this.handleDown.bind(this), { passive: false });
         document.addEventListener('touchend', this.onPointerUp.bind(this), { passive: false });
-      
+
         this.addCompetitors()
     }
 
     addCompetitors() {
         const competitors = [
-            { name: 'Competitor A', position: { x: 100, y: 200 } }
+            { name: 'Competitor A', position: { x: 100, y: 200 } },
+            { name: 'Competitor B', position: { x: 100, y: 200 } },
+            { name: 'Competitor C', position: { x: 100, y: 200 } }
         ];
         competitors.forEach(comp => {
             const competitor = new Competitor(comp.name, comp.position);
@@ -199,7 +201,7 @@ class ShoppingCenter extends Scene {
             evt.preventDefault();
         }
         let worldPos = this.getWorldPos(evt);
-        console.log("Pointer/touch down");
+        // console.log("Pointer/touch down");
         this.swipeStartPos = { x: worldPos.x, y: worldPos.y };
         this.isSwiping = true;
     }
@@ -214,7 +216,7 @@ class ShoppingCenter extends Scene {
         }
         if (!this.isSwiping) return;
         let worldPos = this.getWorldPos(evt);
-        console.log("Pointer/touch move");
+        // console.log("Pointer/touch move");
         if (this.lastPointerPos) {
             const deltaX = worldPos.x - this.lastPointerPos.x;
 
@@ -257,8 +259,8 @@ class ShoppingCenter extends Scene {
     }
 
     onActivate() {
-        console.log("Je bent nu in het winkelcentrum");
-        console.log(this.game.timerLeftInMonth);
+        // console.log("Je bent nu in het winkelcentrum");
+        // console.log(this.game.timerLeftInMonth);
         this.monthLoop.start();
         this.incomeLoop.start();
     }

@@ -54,7 +54,7 @@ export class Npc extends Actor {
                 // Select a random product
                 const product = this.game.products[this.random.integer(0, this.game.products.length - 1)];
                 this.game.scoreBoard.addMoney(product.price);
-                console.log(`NPC bought ${product.name} for $${product.price}`);
+                // console.log(`NPC bought ${product.name} for $${product.price}`);
                 // Transfer NPC to cafe scene
                 this.game.transferNpcToCafe(this);
             }
