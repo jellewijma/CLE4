@@ -5,7 +5,8 @@ import { TiledResource } from '@excaliburjs/plugin-tiled'
 const Resources = {
     CoffeeMachineLevel1: new ImageSource('assets/images/CoffeeMachine1.png'),
     CoffeeMachineLevel2: new ImageSource('assets/images/CoffeeMachine2.png'),
-    TiledMapResource: new TiledResource('assets/tilemap/cle4-map.tmx')
+    TiledMapResource: new TiledResource('assets/tilemap/cle4-map.tmx'),
+    // Cafe: new TiledResource('assets/tilemap/CafeLayout.tmx'),
 }
 
 const ResourceLoader = new Loader()

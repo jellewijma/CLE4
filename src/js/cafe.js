@@ -1,5 +1,6 @@
 import { Scene, Label, Font, Color, Timer } from "excalibur"
 import { CoffeeMachine } from "./coffeeMachine";
+import { Resources } from "./resources";
 import { UI } from "./ui";
 
 class Cafe extends Scene {
@@ -73,6 +74,7 @@ class Cafe extends Scene {
     }
 
     onActivate() {
+        Resources.TiledMapResource.addToScene(this.game.currentScene);
         console.log("Je bent nu in het Café")
         console.log(this.game.timerLeftInMonth)
         this.monthLoop.start();
