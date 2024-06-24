@@ -1,5 +1,4 @@
-import '../css/style.css'
-import { Actor, Engine, Vector, DisplayMode } from "excalibur"
+import { Engine, DisplayMode, Vector, Scene } from 'excalibur';
 import { Resources, ResourceLoader } from './resources.js';
 import { Cafe } from './cafe.js';
 import { ShoppingCenter } from './shoppingCenter.js';
@@ -7,7 +6,6 @@ import { End } from './end.js';
 import { Competitor } from './competitor.js';
 
 export class Game extends Engine {
-
     timerLeftInMonth = 8;
     balance = 10000;
     monthlyRent = 1000;
@@ -15,14 +13,35 @@ export class Game extends Engine {
 
     constructor() {
         super({
-            width: 1248,
-            height: 704,
+            width: 288,
+            height: 512,
             maxFps: 60,
-            //displayMode: DisplayMode.FitScreen
+            pixelArt: true,
+            displayMode: DisplayMode.FitScreen,
+            antialiasing: false
         });
+
+
+
+        // Properties from both versions
+        this.npcCount = 0;
+        this.maxNpcCount = 15;
+        this.npcs = [];
+        this.spawnPoints = [];
+        this.shops = [];
+        this.products = [];
+        // NPCs in the cafe
+        this.npcsInCafe = [];
+
+        // New properties from the second version
+        this.timerLeftInMonth = 8;
+        this.balance = 10000;
+        this.monthlyRent = 500;
+
         this.start(ResourceLoader).then(() => this.startGame());
         this.backgroundMusic = Resources.BackgroundMusic;
     }
+
 
     startGame() {
         console.log("start de game!");
@@ -50,6 +69,7 @@ export class Game extends Engine {
         }
 
         this.monthlyRent += 50;
+        UI.updateRent(this.monthlyRent);
         console.log(`De maandhuur is nu ${this.monthlyRent}`)
         UI.updateScore(this.balance);
 
@@ -72,6 +92,31 @@ export class Game extends Engine {
         // console.log(`Je hebt ${this.income} ontvangen, je hebt nu ${this.balance} euro op je rekening`);
         UI.updateScore(this.balance);
     }
+
+    removeNpc(npc) {
+        this.remove(npc);
+        this.npcs = this.npcs.filter(n => n !== npc);
+        this.npcCount--;
+        console.log('npc removed, total:', this.npcCount);
+    }
+
+    transferNpcToCafe(npc) {
+        this.removeNpc(npc);
+        this.npcsInCafe.push(npc);
+        if (this.currentScene instanceof Cafe) {
+            this.currentScene.addNpcToCafe(npc);
+        }
+    }
+
+    removeNpcFromCafe(npc) {
+        this.npcsInCafe = this.npcsInCafe.filter(n => n !== npc);
+        if (this.currentScene instanceof Cafe) {
+            this.currentScene.removeNpcFromCafe(npc);
+        }
+    }
+
 }
 
 new Game();
+
+import '../css/style.css';
