@@ -1,4 +1,4 @@
-import { Actor, Vector, Random, CollisionType } from "excalibur";
+import {Actor, Vector, Random, CollisionType, Animation, range} from "excalibur";
 import { Resources } from "./resources.js";
 import { Shop } from "./shop.js";
 
@@ -6,16 +6,18 @@ export class Npc extends Actor {
     constructor(x, y, game) {
         super({
             pos: new Vector(x, y),
-            width: 20,
-            height: 20,
+            width: 64,
+            height: 64,
             collisionType: CollisionType.Passive // Allow NPCs to pass through each other
         });
 
-        // Assign the sprite to the NPC and make it smaller
-        const npcSprite = Resources.Npc.toSprite();
-        npcSprite.width = 20;
-        npcSprite.height = 20;
-        this.graphics.use(npcSprite);
+        // Create animation from the sprite sheet
+        const walkSheet = Resources.PersonSpriteSheet;
+        const walkAnim = Animation.fromSpriteSheet(walkSheet, range(0, 15), 100); // 100ms per frame
+        walkAnim.scale = new Vector(0.6, 0.6); // Adjust scale if needed
+
+        // Use the animation
+        this.graphics.use(walkAnim);
 
         // Store reference to the game instance
         this.game = game;
