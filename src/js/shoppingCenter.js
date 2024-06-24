@@ -1,3 +1,4 @@
+
 import { Scene, Label, Font, Color, Timer, Vector, CollisionType, Actor, Polygon, vec } from "excalibur";
 import { CreateTilemap } from "./loadTilemap";
 import { Npc } from "./npc.js";
@@ -24,7 +25,8 @@ class ShoppingCenter extends Scene {
         this.incomeLoop = null;
     }
 
-    onInitialize() {
+
+    onInitialize(engine) {
         const createTileMap = new CreateTilemap();
         this.add(createTileMap);
 
@@ -289,6 +291,11 @@ class ShoppingCenter extends Scene {
         this.monthLoop.stop();
         this.incomeLoop.stop();
     }
-}
 
+
+
+    onDeactivate() {
+
+    }
+}
 export { ShoppingCenter };

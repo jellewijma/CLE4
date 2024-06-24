@@ -1,5 +1,7 @@
-import { Engine, DisplayMode, Vector, Scene } from 'excalibur';
+
+import {Engine, DisplayMode, Scene} from 'excalibur';
 import { Resources, ResourceLoader } from './resources.js';
+import { StartScreen } from './startScreen.js';
 import { Cafe } from './cafe.js';
 import { ShoppingCenter } from './shoppingCenter.js';
 import { End } from './end.js';
@@ -21,7 +23,6 @@ export class Game extends Engine {
         });
 
 
-
         // Properties from both versions
         this.npcCount = 0;
         this.maxNpcCount = 15;
@@ -38,30 +39,38 @@ export class Game extends Engine {
         this.monthlyRent = 500;
 
         this.start(ResourceLoader).then(() => {
+
             this.startGame();
         });
+            this.addScenes();
+            this.goToScene('startScreen');
+        });
+    }
+
+    addScenes() {
+        this.add('startScreen', new StartScreen());
+        this.add('cafe', new Cafe(this));
+        this.add('shoppingcenter', new ShoppingCenter(this));
+        this.add('end', new End(this));
     }
 
 
     startGame() {
         console.log("start de game!");
-        this.add("cafe", new Cafe(this));
-        this.add("shoppingcenter", new ShoppingCenter(this));
-        this.add("end", new End(this));
         this.goToScene("shoppingcenter", { sceneActivationData: this.timerLeftInMonth });
     }
 
     increaseMonthlyRent(UI) {
         if (this.balance < this.monthlyRent) {
-            console.log("Je hebt niet genoeg geld om de huur te betalen")
-            this.goToScene('end')
+            console.log("Je hebt niet genoeg geld om de huur te betalen");
+            this.goToScene('end');
             return;
         }
         this.balance -= this.monthlyRent;
         this.monthlyRent += 50;
         UI.updateRent(this.monthlyRent);
-        console.log(`De maandhuur is nu ${this.monthlyRent}`)
-        console.log(`Je hebt nu nog ${this.balance} op je rekening`)
+        console.log(`De maandhuur is nu ${this.monthlyRent}`);
+        console.log(`Je hebt nu nog ${this.balance} op je rekening`);
         UI.updateScore(this.balance);
     }
 
@@ -93,6 +102,18 @@ export class Game extends Engine {
         }
     }
 
+
+}
+
+class MainGameScene extends Scene {
+    constructor(game) {
+        super(game);
+        this.game = game;
+    }
+
+    onInitialize(engine) {
+        this.game.startGame();
+    }
 }
 
 new Game();
