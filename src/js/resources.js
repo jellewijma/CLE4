@@ -1,7 +1,6 @@
-import { ImageSource, Sound, Resource, Loader } from 'excalibur'
-import { TiledResource } from '@excaliburjs/plugin-tiled'
+import { ImageSource, SpriteSheet, Loader } from 'excalibur';
+import { TiledResource } from "@excaliburjs/plugin-tiled";
 
-// voeg hier jouw eigen resources toe
 const Resources = {
     Npc: new ImageSource('assets/images/npc.png'),
     paidnpc: new ImageSource('assets/images/paidnpc.png'),
@@ -13,9 +12,9 @@ const Resources = {
     Button: new ImageSource('assets/images/button.png')
 }
 
-const ResourceLoader = new Loader()
+const ResourceLoader = new Loader();
 for (let res of Object.values(Resources)) {
-    ResourceLoader.addResource(res)
+    ResourceLoader.addResource(res);
 }
 
-export { Resources, ResourceLoader }
+export { Resources, ResourceLoader };

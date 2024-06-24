@@ -5,8 +5,7 @@ class UI extends ScreenElement {
 
     score;
     monthlyRent;
-    bgScore;
-    bgRent;
+    backdrop;
 
     constructor() {
         super(
@@ -44,7 +43,6 @@ class UI extends ScreenElement {
                 color: Color.Black
             })
         })
-
     }
 
     onInitialize() {
