@@ -9,15 +9,14 @@ import { Product } from "./product.js";
 import { ScoreBoard } from "./scoreboard.js";
 import { Path } from "./path.js";
 import { UI } from "./ui";
-
+import { Competitor } from "./competitor";
 class ShoppingCenter extends Scene {
 
     monthLoop;
-
     incomeLoop;
-
     ui;
-    uiM;
+
+
     constructor(game) {
         super();
         this.game = game;
@@ -28,6 +27,8 @@ class ShoppingCenter extends Scene {
     onInitialize() {
         const createTileMap = new CreateTilemap();
         this.add(createTileMap);
+
+
 
         // label increment
         let next = new Actor({
@@ -148,11 +149,11 @@ class ShoppingCenter extends Scene {
             fcn: () => {
                 if (this.game.timerLeftInMonth > 0) {
                     this.game.timerLeftInMonth--;
-                    console.log(this.game.timerLeftInMonth);
+                    // console.log(this.game.timerLeftInMonth);
                 } else {
                     this.game.timerLeftInMonth = 8;
                     this.game.increaseMonthlyRent(this.ui);
-                    console.log(this.game.timerLeftInMonth);
+                    // console.log(this.game.timerLeftInMonth);
                 }
             },
             interval: 500,
@@ -167,13 +168,6 @@ class ShoppingCenter extends Scene {
         this.ui.pos.y = 10;
         this.add(this.ui);
 
-        // this.uiM = new UI();
-        // this.uiM.pos.x = 20;
-        // this.uiM.pos.y = 20;
-        // // this.uiM.text = "Maandhuur: 500";
-        // this.add(this.uiM);
-
-
         // Swipe tracking
         this.isSwiping = false;
         this.swipeStartPos = null;
@@ -182,7 +176,18 @@ class ShoppingCenter extends Scene {
         document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
         document.addEventListener('touchstart', this.handleDown.bind(this), { passive: false });
         document.addEventListener('touchend', this.onPointerUp.bind(this), { passive: false });
+      
+        this.addCompetitors()
+    }
 
+    addCompetitors() {
+        const competitors = [
+            { name: 'Competitor A', position: { x: 100, y: 200 } }
+        ];
+        competitors.forEach(comp => {
+            const competitor = new Competitor(comp.name, comp.position);
+            this.add(competitor);
+        });
     }
 
     // Handle pointer/touch start

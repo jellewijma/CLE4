@@ -1,4 +1,4 @@
-import { ImageSource, Sound, Resource, Loader } from 'excalibur'
+import { ImageSource, Loader, Sound } from 'excalibur'
 import { TiledResource } from '@excaliburjs/plugin-tiled'
 
 // voeg hier jouw eigen resources toe
