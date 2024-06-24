@@ -17,16 +17,15 @@ class Cafe extends Scene {
         this.game = game
         this.backgroundColor = Color.Gray
 
-
-
         // label increment
         let next = new Label({
             text: "Next Scene",
             color: Color.White,
-            x: 700,
-            y: 10,
+            x: 70,
+            y: 450,
+            z: 10,
             font: new Font({
-                size: 20,
+                size: 16,
                 family: 'Arial'
             }),
         });
@@ -101,8 +100,9 @@ class Cafe extends Scene {
 
   
     onInitialize() {
-        this.coffeeMachine = new CoffeeMachine(600, 400, this.ui);
+        this.coffeeMachine = new CoffeeMachine(112, 98, this.ui);
         this.add(this.coffeeMachine);
+        console.log(this.game.scene);
     }
 
 
