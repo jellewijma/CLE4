@@ -23,6 +23,7 @@ class ShoppingCenter extends Scene {
             color: Color.White,
             x: 700,
             y: 50,
+            z: 10,
             font: new Font({
                 size: 20,
                 family: 'Arial'
@@ -51,8 +52,8 @@ class ShoppingCenter extends Scene {
         this.incomeTimer();
 
         this.ui = new UI();
-        this.ui.pos.x = 20;
-        this.ui.pos.y = 20;
+        this.ui.pos.x = 10;
+        this.ui.pos.y = 10;
         this.add(this.ui);
 
         // this.uiM = new UI();
@@ -67,8 +68,6 @@ class ShoppingCenter extends Scene {
         this.swipeStartPos = null;
         this.lastPointerPos = null;
 
-        this.game.input.pointers.primary.on('move', this.handleMove.bind(this));
-        this.game.input.pointers.primary.on('down', this.handleDown.bind(this));
         document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
         document.addEventListener('touchstart', this.handleDown.bind(this), { passive: false });
         document.addEventListener('touchend', this.onPointerUp.bind(this), { passive: false });
@@ -96,7 +95,17 @@ class ShoppingCenter extends Scene {
         console.log("Pointer/touch move");
         if (this.lastPointerPos) {
             const deltaX = worldPos.x - this.lastPointerPos.x;
-            this.game.currentScene.camera.pos.x -= deltaX;
+
+            // not outside the map
+            if (this.game.currentScene.camera.pos.x - deltaX < 145) {
+                this.game.currentScene.camera.pos.x = 145;
+                console.log("niet verder dan 0")
+            } else if (this.game.currentScene.camera.pos.x - deltaX > 992 - 146) {
+                this.game.currentScene.camera.pos.x = 992 - 146;
+                console.log("niet verder dan 500")
+            } else {
+                this.game.currentScene.camera.pos.x -= deltaX;
+            }
         }
         this.lastPointerPos = worldPos;
     }
@@ -133,6 +142,13 @@ class ShoppingCenter extends Scene {
         console.log(this.game.timerLeftInMonth)
         this.monthLoop.start();
         this.incomeLoop.start()
+    }
+
+    onDeactivate() {
+        // deactiveer de document event listeners
+        document.removeEventListener('touchmove', this.handleMove.bind(this));
+        document.removeEventListener('touchstart', this.handleDown.bind(this));
+        document.removeEventListener('touchend', this.onPointerUp.bind(this));
     }
 }
 
