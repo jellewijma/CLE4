@@ -18,7 +18,6 @@ class Cafe extends Scene {
         this.backgroundColor = Color.Gray
 
 
-
         // label increment
         let next = new Label({
             text: "Next Scene",
@@ -103,6 +102,12 @@ class Cafe extends Scene {
     onInitialize() {
         this.coffeeMachine = new CoffeeMachine(600, 400, this.ui);
         this.add(this.coffeeMachine);
+
+        // // deactive touch events
+        // document.removeEventListener('touchmove', this.handleMove.bind(this));
+        // document.removeEventListener('touchstart', this.handleDown.bind(this));
+        // document.removeEventListener('touchend', this.onPointerUp.bind(this));
+        console.log(this.game.scene);
     }
 
 
