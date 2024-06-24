@@ -1,6 +1,5 @@
-import { Label, ScreenElement, Font, Color, Actor, CollisionType, Vector, Resource } from "excalibur"
+import { Label, ScreenElement, Font, Color, Actor, CollisionType, Vector } from "excalibur"
 import { Resources } from "./resources"
-
 
 class UI extends ScreenElement {
 
@@ -44,26 +43,12 @@ class UI extends ScreenElement {
                 color: Color.Black
             })
         })
-
-        // this.backdrop = new Actor({
-        //     x: 0,
-        //     y: 0,
-        //     width: 800,
-        //     height: 600
-        // })
-
-        // this.backdrop = Resources.Backdrop.toSprite()
-        // this.backdrop.x = 0
-        // this.backdrop.y = 0
-        // this.backdrop.z = 0
     }
 
     onInitialize() {
         this.addChild(this.score)
         this.addChild(this.monthlyRent)
-        // this.add(this.backdrop)
-        // console.log(this.backdrop)
-        this.graphics.add(Resources.Backdrop.toSprite())
+        this.graphics.add(Resources.Backdrop.toSprite());
     }
 
     add(child) {
