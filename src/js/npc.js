@@ -51,10 +51,7 @@ export class Npc extends Actor {
         const shops = this.game.shops;
         const targetShop = shops[Math.floor(Math.random() * shops.length)];
         this.actions.moveTo(targetShop.pos.x, targetShop.pos.y, 100);
-    }
-
         this.updateAnimation(targetShop.pos);
-        this.actions.moveTo(targetShop.pos.x, targetShop.pos.y, 100);
     }
 
     updateAnimation(targetPos) {

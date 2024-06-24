@@ -1,5 +1,5 @@
 
-import {Engine, DisplayMode, Scene} from 'excalibur';
+import { Engine, DisplayMode, Scene } from 'excalibur';
 import { Resources, ResourceLoader } from './resources.js';
 import { StartScreen } from './startScreen.js';
 import { Cafe } from './cafe.js';
@@ -41,9 +41,6 @@ export class Game extends Engine {
         this.start(ResourceLoader).then(() => {
 
             this.startGame();
-        });
-            this.addScenes();
-            this.goToScene('startScreen');
         });
     }
 
