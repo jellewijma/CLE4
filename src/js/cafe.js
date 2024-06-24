@@ -53,8 +53,8 @@ class Cafe extends Scene {
 
 
         this.ui = new UI();
-        this.ui.pos.x = 20;
-        this.ui.pos.y = 20;
+        this.ui.pos.x = 10;
+        this.ui.pos.y = 10;
         this.add(this.ui);
     }
 

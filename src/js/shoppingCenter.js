@@ -187,6 +187,9 @@ class ShoppingCenter extends Scene {
 
     // Handle pointer/touch start
     handleDown(evt) {
+        if (this.game.currentScene.constructor.name !== 'ShoppingCenter') {
+            return;
+        }
         if (evt && typeof evt.preventDefault === 'function') {
             evt.preventDefault();
         }
@@ -198,6 +201,9 @@ class ShoppingCenter extends Scene {
 
     // Handle pointer/touch move
     handleMove(evt) {
+        if (this.game.currentScene.constructor.name !== 'ShoppingCenter') {
+            return;
+        }
         if (evt && typeof evt.preventDefault === 'function') {
             evt.preventDefault();
         }
