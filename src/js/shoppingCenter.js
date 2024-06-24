@@ -1,5 +1,12 @@
-import { Scene, Label, Font, Color, Timer } from "excalibur"
+import { Scene, Label, Font, Color, Timer, Vector, CollisionType, Actor, Polygon, vec } from "excalibur";
 import { CreateTilemap } from "./loadTilemap";
+import { Npc } from "./npc.js";
+import { NpcPaid } from "./npcPaid.js";
+import { Shop } from "./shop.js";
+import { SpawnPoint } from "./spawnPoint.js";
+import { Product } from "./product.js";
+import { ScoreBoard } from "./scoreboard.js";
+import { Path } from "./path.js";
 import { UI } from "./ui";
 
 class ShoppingCenter extends Scene {
@@ -11,29 +18,161 @@ class ShoppingCenter extends Scene {
     ui;
     uiM;
     constructor(game) {
-        super()
+        super();
+        this.game = game;
+        this.monthLoop = null;
+        this.incomeLoop = null;
+    }
 
-        this.game = game
+    onInitialize() {
         const createTileMap = new CreateTilemap();
         this.add(createTileMap);
 
         // label increment
         let next = new Label({
-            text: "Next Scene",
-            color: Color.White,
-            x: 700,
-            y: 50,
+            text: "My Cafe",
+            color: Color.Black,
+            x: 525,
+            y: 75,
             z: 10,
             font: new Font({
-                size: 20,
+                size: 16,
                 family: 'Arial'
             }),
         });
+        let nextBg = new Actor({
+            z: 9,
+            x: 524,
+            y: 74,
+            width: 64,
+            height: 18,
+            color: Color.White,
+            collisionType: CollisionType.PreventCollision,
+            anchor: new Vector(0, 0)
+        });
+
+        const triangle = new Polygon({
+            points: [vec(32, 0), vec(0, 18), vec(64, 18)],
+            color: Color.White,
+        });
+
+        let tri = new Actor({
+            z: 9,
+            x: 524,
+            y: 74 - 18,
+            color: Color.Yellow,
+            anchor: new Vector(0, 0)
+        });
+
+        tri.graphics.add(triangle);
+        this.add(tri);
+        this.add(nextBg);
         next.on('pointerup', () => {
             this.game.goToScene("cafe", { sceneActivationData: this.game.counter });
         });
         this.add(next);
 
+        // Create shops in each corner
+        const corners = [
+            new Vector(400, 170),
+            new Vector(680 - 20, 170),
+            new Vector(465, 550 - 20),//your shop
+            new Vector(850 - 20, 550 - 20)
+        ];
+
+        // Create spawn points
+        const spawnPositions = [
+            new Vector(850 - 10, 100),//top
+            new Vector(1100 - 20, 270 - 10),//right-top
+            new Vector(1100 - 20, 470 - 10),//right-bottom
+            new Vector(640 - 10, 600 - 20),//bottom-right
+            new Vector(330 - 10, 600 - 20),//bottom-left
+            new Vector(100, 270 - 10),//left-top
+            new Vector(100, 470 - 10)//left-bottom
+
+        ];
+
+        // Create shops
+        corners.forEach(corner => {
+            const shop = new Shop(corner.x, corner.y);
+            this.add(shop);
+            this.game.shops.push(shop);
+        });
+
+        // Create spawn points
+        spawnPositions.forEach(spawnPos => {
+            const spawnPoint = new SpawnPoint(spawnPos.x, spawnPos.y);
+            this.add(spawnPoint);
+            this.game.spawnPoints.push(spawnPoint);
+        });
+
+        // Create paths
+        const center = new Vector(640 - 10, 360 - 10);
+        spawnPositions.forEach(spawnPos => {
+            const pathToCenter = new Path([spawnPos, center]);
+            this.add(pathToCenter);
+        });
+
+        // Create products
+        this.game.products = [
+            new Product("Coffee", 3),
+            new Product("Sandwich", 8),
+            new Product("Smoothie", 5)
+        ];
+
+        // Create scoreboard
+        this.game.scoreBoard = new ScoreBoard(640, 360);
+        this.add(this.game.scoreBoard);
+
+        // Spawn initial NPC
+        this.spawnNpc();
+
+        // Spawn NPCs every 3 seconds
+        this.game.spawnNpcInterval = setInterval(() => {
+            if (this.game.npcCount < this.game.maxNpcCount) {
+                this.spawnNpc();
+            }
+        }, 3000);
+
+        // Spawn NpcPaid every 3 seconds
+        this.game.spawnNpcPaidInterval = setInterval(() => {
+            this.spawnNpcPaid();
+        }, 3000);
+
+        // Initialize loops
+        this.initLoops();
+    }
+
+    spawnNpc() {
+        // Pick a random spawn point
+        if (this.game.spawnPoints.length > 0) {
+            const spawnPoint = this.game.spawnPoints[Math.floor(Math.random() * this.game.spawnPoints.length)];
+            const npc = new Npc(spawnPoint.pos.x, spawnPoint.pos.y, this.game);
+            this.add(npc);
+            this.game.npcs.push(npc);
+            this.game.npcCount++;
+            console.log('npc created, total:', this.game.npcCount);
+        } else {
+            console.error('No spawn points available');
+        }
+    }
+
+    spawnNpcPaid() {
+        // Pick a random shop with a score greater than 1
+        const eligibleShops = this.game.shops.filter(shop => shop.score >= 1);
+        if (eligibleShops.length > 0) {
+            const shop = eligibleShops[Math.floor(Math.random() * eligibleShops.length)];
+            const npcPaid = new NpcPaid(shop.pos.x, shop.pos.y, this.game, shop);
+            this.add(npcPaid);
+            this.game.npcs.push(npcPaid);
+            this.game.npcCount++;
+            console.log('npcPaid created, total:', this.game.npcCount);
+        } else {
+            console.log('No eligible shops to spawn NpcPaid');
+        }
+    }
+
+    initLoops() {
         this.monthLoop = new Timer({
             fcn: () => {
                 if (this.game.timerLeftInMonth > 0) {
@@ -49,6 +188,7 @@ class ShoppingCenter extends Scene {
             repeats: true
         });
         this.add(this.monthLoop);
+
         this.incomeTimer();
 
         this.ui = new UI();
@@ -124,24 +264,21 @@ class ShoppingCenter extends Scene {
     incomeTimer() {
         const randomInterval = Math.floor(Math.random() * 3000) + 1000;
         this.incomeLoop = new Timer({
-
             fcn: () => {
                 this.game.addIncome(this.ui);
-
                 this.incomeTimer(); // Start de timer opnieuw met een nieuw willekeurig interval
             },
             interval: randomInterval,
             repeats: true
         });
-
         this.add(this.incomeLoop);
     }
 
     onActivate() {
-        console.log("Je bent nu in het winkelcentrum")
-        console.log(this.game.timerLeftInMonth)
+        console.log("Je bent nu in het winkelcentrum");
+        console.log(this.game.timerLeftInMonth);
         this.monthLoop.start();
-        this.incomeLoop.start()
+        this.incomeLoop.start();
     }
 
     onDeactivate() {
@@ -149,9 +286,9 @@ class ShoppingCenter extends Scene {
         document.removeEventListener('touchmove', this.handleMove.bind(this));
         document.removeEventListener('touchstart', this.handleDown.bind(this));
         document.removeEventListener('touchend', this.onPointerUp.bind(this));
+        this.monthLoop.stop();
+        this.incomeLoop.stop();
     }
 }
 
-
-
-export { ShoppingCenter }
+export { ShoppingCenter };

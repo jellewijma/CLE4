@@ -9,7 +9,7 @@ export default {
                 "short_name": "Barista Blitz",
                 "icons": [
                     {
-                        "src": "assets/logo.png",
+                        "src": "assets/logo/logo.jpeg",
                         "sizes": "512x512",
                         "type": "image/png"
                     }

@@ -1,5 +1,6 @@
-import { Scene, Label, Font, Color, Timer } from "excalibur"
+import { Scene, Label, Font, Color, Timer, Vector } from "excalibur"
 import { CoffeeMachine } from "./coffeeMachine";
+import { Resources } from "./resources";
 import { UI } from "./ui";
 
 class Cafe extends Scene {
@@ -69,14 +70,34 @@ class Cafe extends Scene {
             repeats: true
         });
         this.add(this.incomeLoop);
+    }
 
+    addNpcToCafe(npc) {
+        this.add(npc);
+        npc.pos = new Vector(100 + Math.random() * 400, 100 + Math.random() * 400); // Position NPCs randomly in the cafe
+    }
+
+    removeNpcFromCafe(npc) {
+        this.remove(npc);
     }
 
     onActivate() {
+        // Add NPCs that are in the cafe
+        this.game.npcsInCafe.forEach(npc => {
+            this.addNpcToCafe(npc);
+        });
+
+        // Resources.TiledMapResource.addToScene(this.game.currentScene);
+        Resources.Cafe.addToScene(this.game.currentScene)
         console.log("Je bent nu in het Café")
         console.log(this.game.timerLeftInMonth)
         this.monthLoop.start();
         this.incomeLoop.start();
+    }
+
+    onDeactivate() {
+        this.monthLoop.stop();
+        this.incomeLoop.stop();
     }
 
     onInitialize() {
@@ -86,7 +107,5 @@ class Cafe extends Scene {
 
 
 }
-
-
 
 export { Cafe }
