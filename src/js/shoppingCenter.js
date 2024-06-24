@@ -68,8 +68,6 @@ class ShoppingCenter extends Scene {
         this.swipeStartPos = null;
         this.lastPointerPos = null;
 
-        this.game.input.pointers.primary.on('move', this.handleMove.bind(this));
-        this.game.input.pointers.primary.on('down', this.handleDown.bind(this));
         document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
         document.addEventListener('touchstart', this.handleDown.bind(this), { passive: false });
         document.addEventListener('touchend', this.onPointerUp.bind(this), { passive: false });
@@ -144,6 +142,13 @@ class ShoppingCenter extends Scene {
         console.log(this.game.timerLeftInMonth)
         this.monthLoop.start();
         this.incomeLoop.start()
+    }
+
+    onDeactivate() {
+        // deactiveer de document event listeners
+        document.removeEventListener('touchmove', this.handleMove.bind(this));
+        document.removeEventListener('touchstart', this.handleDown.bind(this));
+        document.removeEventListener('touchend', this.onPointerUp.bind(this));
     }
 }
 
