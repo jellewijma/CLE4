@@ -22,10 +22,11 @@ class Cafe extends Scene {
         let next = new Label({
             text: "Next Scene",
             color: Color.White,
-            x: 700,
-            y: 10,
+            x: 70,
+            y: 450,
+            z: 10,
             font: new Font({
-                size: 20,
+                size: 16,
                 family: 'Arial'
             }),
         });
