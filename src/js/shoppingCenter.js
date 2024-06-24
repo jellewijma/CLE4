@@ -1,21 +1,22 @@
 import { Scene, Label, Font, Color, Timer } from "excalibur"
 import { CreateTilemap } from "./loadTilemap";
 import { UI } from "./ui";
-
+import { Competitor } from "./competitor";
 class ShoppingCenter extends Scene {
 
     monthLoop;
-
     incomeLoop;
-
     ui;
-    uiM;
+
+
     constructor(game) {
         super()
 
         this.game = game
         const createTileMap = new CreateTilemap();
         this.add(createTileMap);
+
+
 
         // label increment
         let next = new Label({
@@ -37,11 +38,11 @@ class ShoppingCenter extends Scene {
             fcn: () => {
                 if (this.game.timerLeftInMonth > 0) {
                     this.game.timerLeftInMonth--;
-                    console.log(this.game.timerLeftInMonth);
+                    // console.log(this.game.timerLeftInMonth);
                 } else {
                     this.game.timerLeftInMonth = 8;
                     this.game.increaseMonthlyRent(this.ui);
-                    console.log(this.game.timerLeftInMonth);
+                    // console.log(this.game.timerLeftInMonth);
                 }
             },
             interval: 500,
@@ -60,7 +61,18 @@ class ShoppingCenter extends Scene {
         // this.uiM.pos.y = 20;
         // // this.uiM.text = "Maandhuur: 500";
         // this.add(this.uiM);
+        this.addCompetitors()
+    }
 
+
+    addCompetitors() {
+        const competitors = [
+            { name: 'Competitor A', position: { x: 100, y: 200 } }
+        ];
+        competitors.forEach(comp => {
+            const competitor = new Competitor(comp.name, comp.position);
+            this.add(competitor);
+        });
     }
 
     incomeTimer() {

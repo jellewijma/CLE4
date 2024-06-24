@@ -4,13 +4,14 @@ import { Resources, ResourceLoader } from './resources.js';
 import { Cafe } from './cafe.js';
 import { ShoppingCenter } from './shoppingCenter.js';
 import { End } from './end.js';
+import { Competitor } from './competitor.js';
 
 export class Game extends Engine {
 
     timerLeftInMonth = 8;
     balance = 10000;
-    monthlyRent = 500;
-    income = 100;
+    monthlyRent = 1000;
+    income = 1000;
 
     constructor() {
         super({
@@ -20,6 +21,7 @@ export class Game extends Engine {
             //displayMode: DisplayMode.FitScreen
         });
         this.start(ResourceLoader).then(() => this.startGame());
+        this.backgroundMusic = Resources.BackgroundMusic;
     }
 
     startGame() {
@@ -28,7 +30,13 @@ export class Game extends Engine {
         this.add("shoppingcenter", new ShoppingCenter(this));
         this.add("end", new End(this));
         this.goToScene("shoppingcenter", { sceneActivationData: this.timerLeftInMonth });
+
+
+
     }
+
+
+
 
     increaseMonthlyRent(UI) {
         if (this.balance < this.monthlyRent) {
@@ -36,16 +44,32 @@ export class Game extends Engine {
             this.goToScene('end')
             return;
         }
-        this.balance -= this.monthlyRent;
+
+        if (this.balance > 0) {
+            this.balance -= this.monthlyRent;
+        }
+
         this.monthlyRent += 50;
         console.log(`De maandhuur is nu ${this.monthlyRent}`)
-        console.log(`Je hebt nu nog ${this.balance} op je rekening`)
         UI.updateScore(this.balance);
+
+        this.currentScene.actors.forEach(actor => {
+            if (actor instanceof Competitor) {
+                if (actor.balance > 0) {
+                    actor.balance -= this.monthlyRent;
+                }
+                if (actor.balance < 0) {
+                    actor.opponentGameOver(this);
+                } else {
+                    console.log(`${actor.name} paid ${this.monthlyRent} rent, new balance is ${actor.balance}`);
+                }
+            }
+        });
     }
 
     addIncome(UI) {
         this.balance += this.income;
-        console.log(`Je hebt ${this.income} ontvangen, je hebt nu ${this.balance} euro op je rekening`);
+        // console.log(`Je hebt ${this.income} ontvangen, je hebt nu ${this.balance} euro op je rekening`);
         UI.updateScore(this.balance);
     }
 }
