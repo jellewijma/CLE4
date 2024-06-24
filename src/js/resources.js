@@ -9,9 +9,10 @@ const Resources = {
     Npc: new ImageSource(npcImage),
     paidnpc: new ImageSource(paidnpc),
     thinking: new ImageSource(thinking),
-
-
-    TiledMapResource: new TiledResource('public/assets/tilemap/cle4-map.tmx')
+    CoffeeMachineLevel1: new ImageSource('assets/images/CoffeeMachine1.png'),
+    CoffeeMachineLevel2: new ImageSource('assets/images/CoffeeMachine2.png'),
+    TiledMapResource: new TiledResource('assets/tilemap/cle4-map.tmx'),
+    // Cafe: new TiledResource('assets/tilemap/CafeLayout.tmx'),
 }
 
 const ResourceLoader = new Loader()

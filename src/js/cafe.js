@@ -1,15 +1,23 @@
-import {Scene, Label, Font, Color, Timer, Vector} from "excalibur"
+import { Scene, Label, Font, Color, Timer, Vector } from "excalibur"
+import { CoffeeMachine } from "./coffeeMachine";
+import { Resources } from "./resources";
+import { UI } from "./ui";
 
 class Cafe extends Scene {
 
     monthLoop;
     incomeLoop;
+    coffeeMachine;
+
+    ui;
 
     constructor(game) {
         super()
 
         this.game = game
         this.backgroundColor = Color.Gray
+
+
 
         // label increment
         let next = new Label({
@@ -31,11 +39,10 @@ class Cafe extends Scene {
             fcn: () => {
                 if (this.game.timerLeftInMonth > 0) {
                     this.game.timerLeftInMonth--;
-                    console.log(this.game.timerLeftInMonth);
+                    // console.log(this.game.timerLeftInMonth);
                 } else {
                     this.game.timerLeftInMonth = 8;
-                    this.game.increaseMonthlyRent();
-                    console.log(this.game.timerLeftInMonth);
+                    this.game.increaseMonthlyRent(this.ui);
                 }
             },
             interval: 500,
@@ -43,6 +50,12 @@ class Cafe extends Scene {
         });
         this.add(this.monthLoop);
         this.incomeTimer();
+
+
+        this.ui = new UI();
+        this.ui.pos.x = 20;
+        this.ui.pos.y = 20;
+        this.add(this.ui);
     }
 
     incomeTimer() {
@@ -50,7 +63,7 @@ class Cafe extends Scene {
         this.incomeLoop = new Timer({
 
             fcn: () => {
-                this.game.addIncome();
+                this.game.addIncome(this.ui);
                 this.incomeTimer();
             },
             interval: randomInterval,
@@ -69,14 +82,14 @@ class Cafe extends Scene {
     }
 
     onActivate() {
-        console.log("Je bent nu in het Café");
-        console.log(this.game.timerLeftInMonth);
-
         // Add NPCs that are in the cafe
         this.game.npcsInCafe.forEach(npc => {
             this.addNpcToCafe(npc);
         });
 
+        Resources.TiledMapResource.addToScene(this.game.currentScene);
+        console.log("Je bent nu in het Café")
+        console.log(this.game.timerLeftInMonth)
         this.monthLoop.start();
         this.incomeLoop.start();
     }
@@ -85,6 +98,13 @@ class Cafe extends Scene {
         this.monthLoop.stop();
         this.incomeLoop.stop();
     }
+  
+    onInitialize() {
+        this.coffeeMachine = new CoffeeMachine(600, 400, this.ui);
+        this.add(this.coffeeMachine);
+    }
+
+
 }
 
 export { Cafe }
