@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="9" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
  <tileset firstgid="1" name="pixilart-drawing (2)" tilewidth="32" tileheight="32" tilecount="0" columns="8">
-  <image source="../../../Downloads/pixilart-drawing (2).png" width="256" height="256"/>
+  <image source="pixilart-drawing (7).png" width="256" height="256"/>
  </tileset>
  <tileset firstgid="1" name="tilemap-cafe-pixilart" tilewidth="32" tileheight="32" tilecount="0" columns="8">
-  <image source="../../../Downloads/tilemap-cafe-pixilart.png" width="256" height="256"/>
+  <image source="tilemap-cafe-pixilart.png" width="256" height="256"/>
  </tileset>
  <tileset firstgid="1" name="tilemap-cafe-pixilart (9)" tilewidth="32" tileheight="32" tilecount="0" columns="8">
-  <image source="../../../Downloads/tilemap-cafe-pixilart (9).png" width="256" height="256"/>
+  <image source="tilemap-cafe-pixilart (9).png" width="256" height="256"/>
  </tileset>
  <tileset firstgid="1" name="cafe-storefront-pixilart" tilewidth="32" tileheight="32" tilecount="0" columns="9">
-  <image source="../../../Downloads/cafe-storefront-pixilart.png" width="288" height="64"/>
+  <image source="cafe-storefront-pixilart.png" width="288" height="64"/>
  </tileset>
  <tileset firstgid="1" name="cafe-storefront-pixilart" tilewidth="32" tileheight="32" tilecount="18" columns="9">
   <image source="cafe-storefront-pixilart.png" width="288" height="64"/>

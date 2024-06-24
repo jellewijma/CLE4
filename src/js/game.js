@@ -1,6 +1,5 @@
 import { Engine, DisplayMode, Vector, Scene } from 'excalibur';
 import { Resources, ResourceLoader } from './resources.js';
-import { StartScreen } from './startScreen.js';
 import { Cafe } from './cafe.js';
 import { ShoppingCenter } from './shoppingCenter.js';
 import { End } from './end.js';
@@ -20,6 +19,8 @@ export class Game extends Engine {
             displayMode: DisplayMode.FitScreen,
             antialiasing: false
         });
+
+
 
         // Properties from both versions
         this.npcCount = 0;
@@ -92,17 +93,6 @@ export class Game extends Engine {
         }
     }
 
-}
-
-class MainGameScene extends Scene {
-    constructor(game) {
-        super(game);
-        this.game = game;
-    }
-
-    onInitialize(engine) {
-        this.game.startGame();
-    }
 }
 
 new Game();

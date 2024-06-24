@@ -15,12 +15,6 @@
  <tileset firstgid="56" name="tilemap-pixilart (6)" tilewidth="32" tileheight="32" tilecount="64" columns="8">
   <image source="tilemap-pixilart (6).png" width="256" height="256"/>
  </tileset>
- <tileset firstgid="120" name="ingang-+-metro-pixilart" tilewidth="32" tileheight="32" tilecount="0" columns="4">
-  <image source="ingang-+-metro-pixilart.png" width="156" height="124"/>
- </tileset>
- <tileset firstgid="120" name="ingang-+-metro-pixilart" tilewidth="32" tileheight="32" tilecount="0" columns="4">
-  <image source="ingang-+-metro-pixilart.png" width="156" height="124"/>
- </tileset>
  <tileset firstgid="120" name="ingang-metro-pixilart" tilewidth="32" tileheight="32" tilecount="20" columns="5">
   <image source="ingang-metro-pixilart.png" width="160" height="128"/>
  </tileset>

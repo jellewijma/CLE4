@@ -60,7 +60,7 @@ export class Npc extends Actor {
             }
 
             this.game.removeNpc(this); // Ensure this is accessible and properly defined
-            shop.incrementScore();
+            // shop.incrementScore();
             this.enteredShop = true; // Mark that the NPC has entered the shop
         }
     }

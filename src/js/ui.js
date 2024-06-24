@@ -1,15 +1,17 @@
-import { Label, ScreenElement, Font, Color } from "excalibur"
+import { Label, ScreenElement, Font, Color, Actor, CollisionType, Vector } from "excalibur"
 
 class UI extends ScreenElement {
 
     score;
     monthlyRent;
+    bgScore;
+    bgRent;
 
     constructor() {
         super()
 
         this.score = new Label({
-            text: 'Balance: 0',
+            text: 'Balance: €0',
             x: 5,
             y: 5,
             width: 100,
@@ -21,8 +23,19 @@ class UI extends ScreenElement {
             })
         })
 
+        this.bgScore = new Actor({
+            z: 2,
+            x: 4,
+            y: 4,
+            width: 125,
+            height: 18,
+            color: Color.Black,
+            collisionType: CollisionType.PreventCollision,
+            anchor: new Vector(0, 0)
+        })
+
         this.monthlyRent = new Label({
-            text: 'Huur: 500',
+            text: 'Huur: €500',
             x: 5,
             y: 25,
             width: 100,
@@ -33,11 +46,24 @@ class UI extends ScreenElement {
                 color: Color.White
             })
         })
+
+        this.bgRent = new Actor({
+            z: 2,
+            x: 4,
+            y: 24,
+            width: 125,
+            height: 18,
+            color: Color.Black,
+            collisionType: CollisionType.PreventCollision,
+            anchor: new Vector(0, 0)
+        })
     }
 
     onInitialize() {
         this.addChild(this.score)
+        this.addChild(this.bgScore)
         this.addChild(this.monthlyRent)
+        this.addChild(this.bgRent)
     }
 
     add(child) {
@@ -45,11 +71,11 @@ class UI extends ScreenElement {
     }
 
     updateScore(score) {
-        this.score.text = `Balance: ${score}`
+        this.score.text = `Balance: €${score}`
     }
 
     updateRent(rent) {
-        this.monthlyRent.text = `Huur: ${rent}`
+        this.monthlyRent.text = `Huur: €${rent}`
     }
 }
 
