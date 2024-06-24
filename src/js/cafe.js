@@ -86,12 +86,11 @@ class Cafe extends Scene {
             this.addNpcToCafe(npc);
         });
 
+
         // Resources.TiledMapResource.addToScene(this.game.currentScene);
         Resources.Cafe.addToScene(this.game.currentScene)
-        console.log("Je bent nu in het Café")
-        console.log(this.game.timerLeftInMonth)
-        this.monthLoop.start();
-        this.incomeLoop.start();
+
+
     }
 
     onDeactivate() {
@@ -99,6 +98,7 @@ class Cafe extends Scene {
         this.incomeLoop.stop();
     }
 
+  
     onInitialize() {
         this.coffeeMachine = new CoffeeMachine(112, 98, this.ui);
         this.add(this.coffeeMachine);
