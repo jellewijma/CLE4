@@ -1,4 +1,5 @@
 import { Scene, Label, Font, Color, Timer, Vector, CollisionType, Actor, Polygon, vec } from "excalibur";
+import { Resources } from "./resources";
 import { CreateTilemap } from "./loadTilemap";
 import { Npc } from "./npc.js";
 import { NpcPaid } from "./npcPaid.js";
@@ -29,44 +30,14 @@ class ShoppingCenter extends Scene {
         this.add(createTileMap);
 
         // label increment
-        let next = new Label({
-            text: "My Cafe",
-            color: Color.Black,
-            x: 525,
+        let next = new Actor({
+            x: 468,
             y: 75,
             z: 10,
-            font: new Font({
-                size: 16,
-                family: 'Arial'
-            }),
-        });
-        let nextBg = new Actor({
-            z: 9,
-            x: 524,
-            y: 74,
-            width: 64,
-            height: 18,
-            color: Color.White,
-            collisionType: CollisionType.PreventCollision,
-            anchor: new Vector(0, 0)
         });
 
-        const triangle = new Polygon({
-            points: [vec(32, 0), vec(0, 18), vec(64, 18)],
-            color: Color.White,
-        });
+        next.graphics.add(Resources.Button.toSprite());
 
-        let tri = new Actor({
-            z: 9,
-            x: 524,
-            y: 74 - 18,
-            color: Color.Yellow,
-            anchor: new Vector(0, 0)
-        });
-
-        tri.graphics.add(triangle);
-        this.add(tri);
-        this.add(nextBg);
         next.on('pointerup', () => {
             this.game.goToScene("cafe", { sceneActivationData: this.game.counter });
         });

@@ -1,4 +1,5 @@
 import { Label, ScreenElement, Font, Color, Actor, CollisionType, Vector } from "excalibur"
+import { Resources } from "./resources"
 
 class UI extends ScreenElement {
 
@@ -8,7 +9,15 @@ class UI extends ScreenElement {
     bgRent;
 
     constructor() {
-        super()
+        super(
+            {
+                x: 0,
+                y: 0,
+                width: 800,
+                height: 600,
+                z: 10
+            }
+        )
 
         this.score = new Label({
             text: 'Balance: €0',
@@ -19,19 +28,8 @@ class UI extends ScreenElement {
             z: 10,
             font: new Font({
                 size: 16,
-                color: Color.White
+                color: Color.Black
             })
-        })
-
-        this.bgScore = new Actor({
-            z: 2,
-            x: 4,
-            y: 4,
-            width: 125,
-            height: 18,
-            color: Color.Black,
-            collisionType: CollisionType.PreventCollision,
-            anchor: new Vector(0, 0)
         })
 
         this.monthlyRent = new Label({
@@ -43,27 +41,16 @@ class UI extends ScreenElement {
             z: 10,
             font: new Font({
                 size: 16,
-                color: Color.White
+                color: Color.Black
             })
         })
 
-        this.bgRent = new Actor({
-            z: 2,
-            x: 4,
-            y: 24,
-            width: 125,
-            height: 18,
-            color: Color.Black,
-            collisionType: CollisionType.PreventCollision,
-            anchor: new Vector(0, 0)
-        })
     }
 
     onInitialize() {
         this.addChild(this.score)
-        this.addChild(this.bgScore)
         this.addChild(this.monthlyRent)
-        this.addChild(this.bgRent)
+        this.graphics.add(Resources.Backdrop.toSprite());
     }
 
     add(child) {
