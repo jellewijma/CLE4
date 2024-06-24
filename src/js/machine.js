@@ -10,7 +10,7 @@ export class Machine extends Actor {
             width: 50,
             height: 50,
             color: Color.Black,
-            z: 10
+            z: 15
         })
 
         this.spritePrefix = spritePrefix;

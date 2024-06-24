@@ -4,14 +4,18 @@ import { Resources } from "./resources";
 import { UI } from "./ui";
 
 class Cafe extends Scene {
+
     monthLoop;
     incomeLoop;
     coffeeMachine;
 
     ui;
+
     constructor(game) {
         super()
+
         this.game = game
+        this.backgroundColor = Color.Gray
 
         // label increment
         let next = new Label({
@@ -46,15 +50,17 @@ class Cafe extends Scene {
         this.add(this.monthLoop);
         this.incomeTimer();
 
+
         this.ui = new UI();
-        this.ui.pos.x = 10;
-        this.ui.pos.y = 10;
+        this.ui.pos.x = 20;
+        this.ui.pos.y = 20;
         this.add(this.ui);
     }
 
     incomeTimer() {
         const randomInterval = Math.floor(Math.random() * 3000) + 1000;
         this.incomeLoop = new Timer({
+
             fcn: () => {
                 this.game.addIncome(this.ui);
                 this.incomeTimer();
