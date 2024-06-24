@@ -2,7 +2,7 @@ import {ImageSource, Sound, Resource, Loader, SpriteSheet} from 'excalibur'
 import { TiledResource } from '@excaliburjs/plugin-tiled'
 import npcImage from '../images/npc.png';
 import paidnpc from '../images/paidnpc.png'
-import person from '../images/person.png'
+import person from '../../public/assets/images/person.png'
 
 // voeg hier jouw eigen resources toe
 const Resources = {
