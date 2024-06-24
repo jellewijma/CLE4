@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="9" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" name="pixilart-drawing (2)" tilewidth="32" tileheight="32" tilecount="0" columns="8">
+  <image source="pixilart-drawing (7).png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="1" name="tilemap-cafe-pixilart" tilewidth="32" tileheight="32" tilecount="0" columns="8">
+  <image source="tilemap-cafe-pixilart.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="1" name="tilemap-cafe-pixilart (9)" tilewidth="32" tileheight="32" tilecount="0" columns="8">
+  <image source="tilemap-cafe-pixilart (9).png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="1" name="cafe-storefront-pixilart" tilewidth="32" tileheight="32" tilecount="0" columns="9">
+  <image source="cafe-storefront-pixilart.png" width="288" height="64"/>
+ </tileset>
+ <tileset firstgid="1" name="cafe-storefront-pixilart" tilewidth="32" tileheight="32" tilecount="18" columns="9">
+  <image source="cafe-storefront-pixilart.png" width="288" height="64"/>
+ </tileset>
+ <tileset firstgid="19" name="tilemap-cafe-pixilart (9)" tilewidth="32" tileheight="32" tilecount="64" columns="8">
+  <image source="tilemap-cafe-pixilart (9).png" width="256" height="256"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="9" height="16">
+  <data encoding="csv">
+16,16,16,16,16,16,16,16,16,
+20,20,20,20,19,19,19,19,19,
+20,20,20,20,19,19,19,19,19,
+20,20,20,20,19,19,19,19,19,
+20,20,20,20,19,19,19,19,19,
+20,20,20,20,19,19,19,19,19,
+20,20,20,20,19,19,19,19,19,
+20,20,20,20,19,19,19,19,19,
+20,20,20,20,19,19,19,19,19,
+19,19,19,19,19,19,19,19,19,
+19,19,19,19,19,19,19,19,19,
+19,19,19,19,19,19,19,19,19,
+19,19,19,19,19,19,19,19,19,
+19,19,19,19,19,19,19,19,19,
+1,1,1,1,5,6,1,1,1,
+10,11,12,13,14,15,16,17,16
+</data>
+ </layer>
+ <layer id="3" name="Tile Layer 2" width="9" height="16">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,
+23,24,24,26,0,0,0,0,0,
+0,0,0,34,0,0,29,27,28,
+0,0,0,42,0,0,0,0,0,
+0,0,0,50,0,0,29,27,28,
+0,0,0,0,0,0,0,0,0,
+0,0,0,66,0,0,29,51,28,
+0,0,0,74,0,0,29,59,28,
+79,44,44,82,0,0,0,0,0,
+0,0,0,0,0,0,29,27,28,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,29,51,28,
+0,0,0,0,0,0,29,59,28,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

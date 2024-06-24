@@ -1,3 +1,4 @@
+
 import {Engine, DisplayMode, Scene} from 'excalibur';
 import { Resources, ResourceLoader } from './resources.js';
 import { StartScreen } from './startScreen.js';
@@ -21,6 +22,7 @@ export class Game extends Engine {
             antialiasing: false
         });
 
+
         // Properties from both versions
         this.npcCount = 0;
         this.maxNpcCount = 15;
@@ -37,6 +39,9 @@ export class Game extends Engine {
         this.monthlyRent = 500;
 
         this.start(ResourceLoader).then(() => {
+
+            this.startGame();
+        });
             this.addScenes();
             this.goToScene('startScreen');
         });
@@ -48,6 +53,7 @@ export class Game extends Engine {
         this.add('shoppingcenter', new ShoppingCenter(this));
         this.add('end', new End(this));
     }
+
 
     startGame() {
         console.log("start de game!");
@@ -95,6 +101,7 @@ export class Game extends Engine {
             this.currentScene.removeNpcFromCafe(npc);
         }
     }
+
 
 }
 

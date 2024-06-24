@@ -1,3 +1,4 @@
+
 import { Actor, Vector, Random, CollisionType, Animation, range } from "excalibur";
 import { Resources } from "./resources.js";
 import { Shop } from "./shop.js";
@@ -49,6 +50,9 @@ export class Npc extends Actor {
     moveToRandomShop() {
         const shops = this.game.shops;
         const targetShop = shops[Math.floor(Math.random() * shops.length)];
+        this.actions.moveTo(targetShop.pos.x, targetShop.pos.y, 100);
+    }
+
         this.updateAnimation(targetShop.pos);
         this.actions.moveTo(targetShop.pos.x, targetShop.pos.y, 100);
     }
@@ -90,6 +94,7 @@ export class Npc extends Actor {
             }
 
             this.game.removeNpc(this); // Ensure this is accessible and properly defined
+            // shop.incrementScore();
             shop.incrementScore();
             this.enteredShop = true; // Mark that the NPC has entered the shop
         }
