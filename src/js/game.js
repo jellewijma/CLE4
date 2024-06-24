@@ -40,6 +40,7 @@ export class Game extends Engine {
         }
         this.balance -= this.monthlyRent;
         this.monthlyRent += 50;
+        UI.updateRent(this.monthlyRent);
         console.log(`De maandhuur is nu ${this.monthlyRent}`)
         console.log(`Je hebt nu nog ${this.balance} op je rekening`)
         UI.updateScore(this.balance);
