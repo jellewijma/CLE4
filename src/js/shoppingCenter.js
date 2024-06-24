@@ -259,10 +259,6 @@ class ShoppingCenter extends Scene {
         document.removeEventListener('touchmove', this.handleMove.bind(this));
         document.removeEventListener('touchstart', this.handleDown.bind(this));
         document.removeEventListener('touchend', this.onPointerUp.bind(this));
-    }
-}
-
-    onDeactivate() {
         this.monthLoop.stop();
         this.incomeLoop.stop();
     }

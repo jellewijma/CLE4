@@ -37,8 +37,7 @@ export class Game extends Engine {
         this.monthlyRent = 500;
 
         this.start(ResourceLoader).then(() => {
-            this.addScenes();
-            this.goToScene('startScreen');
+            this.startGame();
         });
     }
 
