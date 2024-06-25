@@ -10,7 +10,7 @@ export default {
                 "icons": [
                     {
                         "src": "assets/logo/logo.png",
-                        "sizes": "45x45",
+                        "sizes": "180x180",
                         "type": "image/png"
                     }
                 ],
