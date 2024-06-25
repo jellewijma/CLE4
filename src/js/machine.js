@@ -73,7 +73,7 @@ export class Machine extends Actor {
         });
 
         const levelLabel = new Label({
-            text: `De koffiemachine is level: ${this.level}`,
+            text: `De koffiemachine\n is level: ${this.level}`,
             pos: new Vector(posX - 64, posY),
             font: new Font({
                 size: 12,
