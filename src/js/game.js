@@ -7,8 +7,8 @@ import { Competitor } from './competitor.js';
 
 export class Game extends Engine {
     timerLeftInMonth = 8;
-    balance = 700;
-    monthlyRent = 1000;
+    balance = 1000;
+    monthlyRent = 200;
     income = 100;
 
     constructor() {
@@ -21,8 +21,6 @@ export class Game extends Engine {
             antialiasing: false
         });
 
-
-
         // Properties from both versions
         this.npcCount = 0;
         this.maxNpcCount = 15;
@@ -32,11 +30,6 @@ export class Game extends Engine {
         this.products = [];
         // NPCs in the cafe
         this.npcsInCafe = [];
-
-        // New properties from the second version
-        this.timerLeftInMonth = 8;
-        this.balance = 900;
-        this.monthlyRent = 1000;
 
         this.start(ResourceLoader).then(() => this.startGame());
         this.backgroundMusic = Resources.BackgroundMusic;
@@ -49,13 +42,7 @@ export class Game extends Engine {
         this.add("shoppingcenter", new ShoppingCenter(this));
         this.add("end", new End(this));
         this.goToScene("shoppingcenter", { sceneActivationData: this.timerLeftInMonth });
-
-
-
     }
-
-
-
 
     increaseMonthlyRent(UI) {
         if (this.balance < this.monthlyRent) {

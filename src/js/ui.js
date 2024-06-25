@@ -20,7 +20,7 @@ class UI extends ScreenElement {
         )
 
         this.score = new Label({
-            text: 'Balance: €0',
+            text: 'Balance: €1000',
             x: 5,
             y: 5,
             width: 100,
@@ -33,7 +33,7 @@ class UI extends ScreenElement {
         })
 
         this.monthlyRent = new Label({
-            text: 'Huur: €500',
+            text: 'Huur: €200',
             x: 5,
             y: 25,
             width: 100,

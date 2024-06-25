@@ -7,13 +7,13 @@ export class Leaderboard {
     }
 
     display() {
-        const baseY = 200; // Start Y-position for the first label
+        const baseY = 100; // Start Y-position for the first label
         const intervalY = 50; // Vertical space between labels
 
         this.bankruptShops.forEach((shopName, index) => {
             const positionLabel = new Label({
                 text: `${index + 1}. ${shopName}`,
-                pos: new Vector(100, baseY + (index * intervalY)),
+                pos: new Vector(64, baseY + (index * intervalY)),
                 font: new Font({
                     size: 24,
                     color: Color.White
