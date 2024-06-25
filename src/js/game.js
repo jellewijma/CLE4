@@ -53,7 +53,6 @@ export class Game extends Engine {
             Competitor.bankruptShops.push("Burger King");
             Competitor.bankruptShops.push("KFC");
             this.goToScene("end");
-            this.goToScene('end')
             return;
         }
 

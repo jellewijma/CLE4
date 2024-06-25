@@ -37,45 +37,51 @@ export class Machine extends Actor {
     }
 
     showUpgradeOptions(engine) {
-        const posX = this.pos.x;
-        const posY = this.pos.y - 60; // Boven de machine
+        const posX = this.pos.x + 96;
+        const posY = this.pos.y; // Boven de machine
 
         const background = new Actor({
             pos: new Vector(posX, posY),
-
-            width: 320,
-            height: 100,
+            width: 128,
+            height: 64,
+            z: 19,
             color: Color.White,
         });
 
         const upgradeLabel = new Label({
             text: "Upgraden",
-            pos: new Vector(posX - 110, posY - 10),
+            pos: new Vector(posX - 64, posY - 32),
             font: new Font({
-                size: 20,
+                size: 12,
                 family: 'Arial',
                 color: Color.Black,
             }),
+            anchor: Vector.Half,
+            z: 20,
         });
 
         const cancelLabel = new Label({
             text: "Sluiten",
-            pos: new Vector(posX - 110, posY + 10),
+            pos: new Vector(posX - 64, posY - 16),
             font: new Font({
-                size: 20,
+                size: 12,
                 family: 'Arial',
                 color: Color.Black,
             }),
+            anchor: Vector.Half,
+            z: 20,
         });
 
         const levelLabel = new Label({
             text: `De koffiemachine is level: ${this.level}`,
-            pos: new Vector(posX - 110, posY - 30),
+            pos: new Vector(posX - 64, posY),
             font: new Font({
-                size: 20,
+                size: 12,
                 family: 'Arial',
                 color: Color.Black,
             }),
+            anchor: Vector.Half,
+            z: 20,
         });
 
         upgradeLabel.on('pointerdown', () => {
