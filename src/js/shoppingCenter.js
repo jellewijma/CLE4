@@ -11,24 +11,21 @@ import { Path } from "./path.js";
 import { UI } from "./ui";
 import { Competitor } from "./competitor";
 class ShoppingCenter extends Scene {
-
     monthLoop;
     incomeLoop;
     ui;
-
-
+    name;
     constructor(game) {
         super();
         this.game = game;
         this.monthLoop = null;
         this.incomeLoop = null;
+        this.name = 'ShoppingCenter'
     }
 
     onInitialize() {
         const createTileMap = new CreateTilemap();
         this.add(createTileMap);
-
-
 
         // label increment
         let next = new Actor({
@@ -173,6 +170,7 @@ class ShoppingCenter extends Scene {
         this.swipeStartPos = null;
         this.lastPointerPos = null;
 
+        console.log("add event listeners");
         document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
         document.addEventListener('touchstart', this.handleDown.bind(this), { passive: false });
         document.addEventListener('touchend', this.onPointerUp.bind(this), { passive: false });
@@ -194,7 +192,8 @@ class ShoppingCenter extends Scene {
 
     // Handle pointer/touch start
     handleDown(evt) {
-        if (this.game.currentScene.constructor.name !== 'ShoppingCenter') {
+        console.log("handleDown", this.game.currentScene.constructor);
+        if (this.game.currentScene.name !== 'ShoppingCenter') {
             return;
         }
         if (evt && typeof evt.preventDefault === 'function') {
@@ -208,7 +207,8 @@ class ShoppingCenter extends Scene {
 
     // Handle pointer/touch move
     handleMove(evt) {
-        if (this.game.currentScene.constructor.name !== 'ShoppingCenter') {
+        console.log("handleMove");
+        if (this.game.currentScene.name !== 'ShoppingCenter') {
             return;
         }
         if (evt && typeof evt.preventDefault === 'function') {
@@ -236,6 +236,7 @@ class ShoppingCenter extends Scene {
 
     // Handle pointer/touch end
     onPointerUp(evt) {
+        console.log("onPointerUp");
         this.isSwiping = false;
         this.lastPointerPos = null;
     }
