@@ -27,6 +27,8 @@ class ShoppingCenter extends Scene {
         const createTileMap = new CreateTilemap();
         this.add(createTileMap);
 
+
+
         // label increment
         let next = new Actor({
             x: 468,
